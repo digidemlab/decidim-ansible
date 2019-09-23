@@ -1,0 +1,90 @@
+---
+
+- name: install development tools required for ruby
+  apt:
+    pkg:
+      - git
+      - wget
+      - curl
+      - software-properties-common
+      - autoconf
+      - bison
+      - build-essential
+      - libssl-dev
+      - libyaml-dev
+      - libreadline6-dev
+      - zlib1g-dev
+      - libncurses5-dev
+      - libffi-dev
+      - libgdbm-dev
+      - libicu-dev
+      - libpq-dev  # for postgresql
+      - python # on further rerun, Ansible seems to look for Python 2
+    state: present
+
+- name: install ruby and bundler
+  block:
+    - name: create environment source file for ruby
+      copy:
+        dest: "{{ decidim_home }}/.rubyrc"
+        content: |
+          export PATH="$HOME/.rbenv/bin:$PATH"
+          eval "$(rbenv init -)"
+
+    - name: source ruby environment for {{ decidim_user }} interactive login
+      lineinfile:
+        path: "{{ decidim_home }}/.bashrc"
+        line: '. ~/.rubyrc'
+
+    - name: git checkout ruby repo
+      git:
+        repo: 'https://github.com/rbenv/rbenv.git'
+        dest: "{{ decidim_home }}/.rbenv"
+        version: 'master'
+
+    - name: git checkout ruby-build repo
+      git:
+        repo: 'https://github.com/rbenv/ruby-build.git'
+        dest: "{{ decidim_home }}/.rbenv/plugins/ruby-build"
+        version: 'master'
+
+    - name: install ruby {{ ruby_major_version }}.{{ ruby_minor_version }}
+      # use bash -lc so .rubyrc is executed
+      shell: |
+        . $HOME/.rubyrc
+        rbenv install "{{ ruby_major_version }}.{{ ruby_minor_version }}"
+      args:
+        creates: "{{ decidim_home }}/.rbenv/versions/{{ ruby_major_version }}.{{ ruby_minor_version }}"
+
+    - name: check if ruby {{ ruby_major_version }}.{{ ruby_minor_version }} is the default version
+      shell: |
+        . $HOME/.rubyrc
+        rbenv version | grep "{{ ruby_major_version }}.{{ ruby_minor_version }}"
+      args:
+        warn: no
+      register: rbenv_check_default
+      changed_when: false
+      ignore_errors: true
+
+    - name: set ruby version globally in .rbenv/version
+      shell: |
+        . $HOME/.rubyrc
+        rbenv global "{{ ruby_major_version }}.{{ ruby_minor_version }}"
+      when: rbenv_check_default is failed
+
+    - name: create gem environment source file .gemrc
+      copy:
+        dest: "{{ decidim_home }}/.gemrc"
+        content: |
+          gem: --no-document
+
+    - name: install bundler version {{ bundler_version }} specific for decidim
+      shell: |
+        . $HOME/.rubyrc
+        gem install bundler -v "{{ bundler_version }}"
+      args:
+        creates: "{{ decidim_home }}/.gem/specs/rubygems.org%443/quick/Marshal.4.8/bundler-{{ bundler_version }}.gemspec"
+
+  become: yes
+  become_user: "{{ decidim_user }}"
+  # end-block install ruby and bundler

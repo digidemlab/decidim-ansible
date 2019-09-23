@@ -1,0 +1,7 @@
+---
+
+- name: create linux {{ decidim_user }} user
+  user:
+    name: "{{ decidim_user }}"
+    state: present
+    home: "{{ decidim_home }}"

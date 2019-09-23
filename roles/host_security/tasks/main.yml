@@ -1,0 +1,64 @@
+---
+# tasks file for host_security
+
+- when: override_default_file is file
+  include_vars: "{{ override_default_file }}"
+
+- name: secure host
+  block:
+  - name: set machine timezone to "{{ timezone }}"
+    timezone:
+      name: "{{ timezone }}"
+
+  - name: upgrade all packages on host
+    apt:
+      update_cache: yes
+      upgrade: yes
+      autoremove: yes
+
+  - name: install required security packages
+    apt:
+      state: present
+      pkg: "{{ security_required_packages }}"
+    retries: 2
+    delay: 5
+
+  - name: add admin user(s)
+    loop: "{{ security_admin_users }}"
+    user:
+      name: "{{ item.name }}"
+      shell: '/bin/bash'
+      groups: 'lxd'
+
+  - name: add authorized key for admin user(s)
+    loop: "{{ security_admin_users }}"
+    authorized_key:
+      user: "{{ item.name }}"
+      key: "{{ lookup('file', item.public_key) }}"
+
+  - name: add admin user(s) to sudoers
+    loop: "{{ security_admin_users }}"
+    lineinfile:
+      dest: /etc/sudoers
+      regexp: "{{ item.name }} ALL"
+      line: "{{ item.name }} ALL=(ALL) NOPASSWD:ALL"
+      state: present
+
+  - name: combine security_sshd_settings and security_sshd_settings_user (if defined)
+    set_fact:
+      security_sshd_settings: "{{ security_sshd_settings | combine(security_sshd_settings_user|default({})) }}"
+
+  - name: ensure sshd_config setting
+    lineinfile:
+      dest: "/etc/ssh/sshd_config"
+      regexp: "{{ item }}"
+      line: "{{ security_sshd_settings[item] }}"
+      state: "present"
+    with_items:
+      - "{{ security_sshd_settings | list }}"
+    # TODO bug: timeout on restart ssh
+    #notify: "restart ssh"
+
+  become: yes
+  become_user: root
+  # end-block

@@ -1,0 +1,39 @@
+---
+
+- name: install decidim
+  block:
+  - name: git checkout decidim app
+    git:
+      repo: "{{ decidim_app_repo }}"
+      dest: "{{ decidim_home }}/{{ decidim_app_dir}}"
+      version: "{{ decidim_app_branch }}"
+    notify: bundle install
+
+  - meta: flush_handlers  # run notified handlers now
+
+  - name: bundle exec figaro install
+    shell: |
+      . $HOME/.rubyrc
+      bundle exec figaro install
+    args:
+      chdir: "{{ decidim_home }}/{{ decidim_app_dir }}"
+      creates: "{{ decidim_home }}/.rbenv/versions/{{ ruby_major_version }}.{{ ruby_minor_version }}/bin/figaro"
+
+  - name: create config/application.yml
+    template:
+      src: application.yml.j2
+      dest: "{{ decidim_home }}/{{ decidim_app_dir }}/config/application.yml"
+      mode: '0644'
+    notify: restart nginx
+
+  - name: rails assets recompile
+    shell: |
+      . $HOME/.rubyrc
+      RAILS_ENV={{ deployment_environment }} "{{ decidim_home }}"/.rbenv/shims/bundle exec rails assets:precompile
+    args:
+      chdir: "{{ decidim_home }}/{{ decidim_app_dir }}"
+    notify: restart nginx
+
+  become: yes
+  become_user: "{{ decidim_user }}"
+  # end-block install decidim

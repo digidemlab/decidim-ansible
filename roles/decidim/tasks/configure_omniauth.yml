@@ -1,0 +1,31 @@
+---
+
+# omniauth parameters are also managed in template application.yml
+
+# occurence order in secrets.yml: facebook, twitter, google
+- name: enable facebook omniauth
+  replace:
+    path: "{{ decidim_home }}/{{ decidim_app_dir }}/config/secrets.yml"
+    regexp: 'enabled:.*'
+    replace: "enabled: {{ omniauth_facebook_enable }}"
+    after: 'facebook:'
+    before: 'twitter:'
+  notify: restart nginx
+
+- name: enable twitter omniauth
+  replace:
+    path: "{{ decidim_home }}/{{ decidim_app_dir }}/config/secrets.yml"
+    regexp: 'enabled:.*'
+    replace: "enabled: {{ omniauth_twitter_enable }}"
+    after: 'twitter:'
+    before: 'google_oauth2:'
+  notify: restart nginx
+
+- name: enable google omniauth
+  replace:
+    path: "{{ decidim_home }}/{{ decidim_app_dir }}/config/secrets.yml"
+    regexp: 'enabled:.*'
+    replace: "enabled: {{ omniauth_google_enable }}"
+    after: 'google_oauth2:'
+    before: 'geocoder:'
+  notify: restart nginx

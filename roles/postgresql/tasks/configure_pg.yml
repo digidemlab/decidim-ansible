@@ -1,0 +1,66 @@
+---
+
+- name: set postgresql timezone to {{ timezone }}
+  postgresql_set:
+    name: TimeZone
+    value: "{{ timezone }}"
+  notify: restart postgresql
+  become: yes
+  become_user: postgres
+
+- name: create conf.d
+  file:
+    path: "{{ postgresql_conf_dir }}/conf.d"
+    state: directory
+    owner: "{{ postgresql_user_name }}"
+    group: "{{ postgresql_user_name }}"
+
+# lineinfile's behavior when `backrefs = True` is very odd. We don't want to overwrite include_dirs if it's already
+# properly set, but we don't know the exact format it will be in (with or without '=', with a comment at end of line,
+# etc.). So check for a match first and then add if there's no match.
+- name: check for conf.d include in postgresql.conf
+  lineinfile:
+    line: 'why ansible ;('
+    # The '=' is optional but is present in postgresql.conf.sample, which Debian's sample is based off of (but include*
+    # directive examples in the PostgreSQL docs don't use it). Also ignore comments and whitespace after the directive.
+    regexp: '^include_dir(\s+|\s*=\s*)?''conf.d''\s*(#.*)?$'
+    path: "{{ postgresql_conf_dir }}/postgresql.conf"
+    backrefs: true
+  check_mode: true
+  changed_when: __postgresql_include_dir_result is not changed  # yeah...
+  register: __postgresql_include_dir_result
+  when: "postgresql_version is version_compare('9.3', '>=')"
+
+- name: set conf.d include in postgresql.conf
+  lineinfile:
+    line: "include_dir 'conf.d'"
+    path: "{{ postgresql_conf_dir }}/postgresql.conf"
+    backup: yes
+  notify: restart postgresql
+  when: "postgresql_version is version_compare('9.3', '>=') and __postgresql_include_dir_result is changed"
+
+- name: include 25ansible_postgresql.conf in postgresql.conf
+  lineinfile:
+    line: "include 'conf.d/25ansible_postgresql.conf'"
+    dest: "{{ postgresql_conf_dir }}/postgresql.conf"
+    backup: yes
+  notify: restart postgresql
+  when: "postgresql_version is version_compare('9.3', '<')"
+
+- name: set config options
+  template:
+    src: 25ansible_postgresql.conf.j2
+    dest: "{{ postgresql_conf_dir }}/conf.d/25ansible_postgresql.conf"
+    owner: "{{ postgresql_user_name }}"
+    group: "{{ postgresql_user_name }}"
+    backup: yes
+  notify: restart postgresql
+
+- name: install pg_hba.conf
+  template:
+    src: pg_hba.conf.j2
+    dest: "/etc/postgresql/{{ postgresql_version }}/main/pg_hba.conf"
+    mode: '0644'
+  notify: restart postgresql
+
+- meta: flush_handlers  # run notified handlers now

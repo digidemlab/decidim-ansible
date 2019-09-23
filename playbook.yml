@@ -1,0 +1,13 @@
+---
+# playbook file to set up the machine and install Decidim
+
+- hosts: 95.217.11.149
+  vars:
+    override_default_file: "{{ lookup('first_found', 'custom_settings/vars.yml', errors='ignore') }}"
+  roles:
+    - role: common_settings
+    - role: init_container
+    - role: geerlingguy.clamav
+    - role: postgresql
+    - role: redis
+    - role: decidim

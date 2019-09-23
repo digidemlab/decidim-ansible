@@ -1,0 +1,4 @@
+/*.retry
+/ansible.log
+
+/custom_settings/vars.yml

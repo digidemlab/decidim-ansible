@@ -1,0 +1,14 @@
+
+decidim_servers:
+  hosts:
+    95.217.11.149:
+      ip_address: 95.217.11.149
+      host_name: 95.217.11.149
+      proxy_http_port: 80
+      proxy_https_port: 443
+  vars:
+    ansible_connection: ssh
+    ansible_ssh_extra_args: '-o StrictHostKeyChecking=no'
+    ansible_ssh_private_key_file: '~/.ssh/id_rsa'
+    ansible_port: 22
+    ansible_python_interpreter: /usr/bin/python3

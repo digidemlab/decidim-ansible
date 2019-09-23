@@ -1,0 +1,39 @@
+---
+# override common settings variables here
+
+timezone: Europe/Stockholm
+
+decidim_app_dir: decidim-sweden
+decidim_app_repo: https://github.com/digidemlab/decidim-sweden.git
+decidim_app_branch: vps
+
+decidim_server_name: your-decidim.org  # important for letsencrypt
+decidim_app_name: decidim-sweden
+
+decidim_mailer_sender: do-not-reply@your-decidim.org
+decidim_admin_email: system@example.org
+decidim_admin_password: decidim123456
+
+ruby_major_version: '2.6'
+ruby_minor_version: '3'
+
+# email
+smtp_username: do-not-reply@your-decidim.org
+smtp_password: your_smtp_password
+smtp_address: smtp.example.org
+smtp_domain: your-decidim.org
+smtp_port: 587
+smtp_starttls_auto: "true"
+
+# sentry
+sentry_dsn: your_sentry_address
+
+# clamav
+use_decidim_antivirus: true
+
+# use custom SSL certificate
+ssl_cert_install: false
+
+# use Let's encrypt certificate
+letsencrypt_install: true
+letsencrypt_admin_email: system@example.org

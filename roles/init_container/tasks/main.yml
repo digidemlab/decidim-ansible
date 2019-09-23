@@ -1,0 +1,22 @@
+---
+# tasks file for init_container
+
+- when: override_default_file is file
+  include_vars: "{{ override_default_file }}"
+
+- name: upgrade all packages in container
+  apt:
+    update_cache: yes
+    upgrade: yes
+    autoremove: yes
+  when: ansible_distribution == 'Ubuntu'
+
+- name: upgrade all packages in container
+  yum:
+    name: '*'
+    state: 'latest'
+  when: ansible_distribution == 'Centos'
+
+- name: set machine timezone to "{{ timezone }}"
+  timezone:
+    name: "{{ timezone }}"

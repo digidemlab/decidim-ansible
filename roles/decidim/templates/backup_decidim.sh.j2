@@ -1,0 +1,39 @@
+#!/bin/bash
+##
+## This file is maintained by Ansible - CHANGES WILL BE OVERWRITTEN
+##
+BACKUP_DIR="/backup"
+DATE=$(date "+%Y-%m-%d")
+DAYS_TO_KEEP={{ backup_decidim_days_to_keep }}
+BACKUP_TYPE=$1 # full or partial
+
+if [ "${BACKUP_TYPE}" == "" ]; then
+  echo "ERROR: specify full or partial!"
+  exit 1
+fi
+mkdir -p ${BACKUP_DIR}
+chmod 700 ${BACKUP_DIR}
+if [ ${BACKUP_TYPE} == "full" ]; then
+  # backup all files related to decidim and tools
+  tar -czf ${BACKUP_DIR}/decidim_home_${DATE}.tar.gz {{ decidim_home }}
+  tar -czf ${BACKUP_DIR}/nginx_${DATE}.tar.gz /etc/nginx
+  if [ -d /etc/letsencrypt ]; then
+    tar -czf ${BACKUP_DIR}/letsencrypt_${DATE}.tar.gz /etc/letsencrypt
+  fi
+else
+  # backup minimum files to restore decidim
+  tar -czf ${BACKUP_DIR}/decidim_config_${DATE}.tar.gz {{ decidim_home }}/{{ decidim_app_dir }}/config
+  tar -czf ${BACKUP_DIR}/decidim_log_${DATE}.tar.gz {{ decidim_home }}/{{ decidim_app_dir }}/log
+  if [ -d {{ decidim_home }}/{{ decidim_app_dir }}/public/uploads ]; then
+    tar -czf ${BACKUP_DIR}/decidim_uploads_${DATE}.tar.gz {{ decidim_home }}/{{ decidim_app_dir }}/public/uploads
+  fi
+  if [ -d /etc/nginx/ssl ]; then
+    tar -czf ${BACKUP_DIR}/nginx_ssl_${DATE}.tar.gz /etc/nginx/ssl
+  fi
+  if [ -d /etc/letsencrypt ]; then
+    tar -czf ${BACKUP_DIR}/letsencrypt_${DATE}.tar.gz /etc/letsencrypt
+  fi
+fi
+chmod 600 ${BACKUP_DIR}/*
+# cleanup
+find ${BACKUP_DIR} -type f -mtime +${DAYS_TO_KEEP} | xargs rm -R -f -v

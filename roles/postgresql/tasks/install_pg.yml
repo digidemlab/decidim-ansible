@@ -1,0 +1,22 @@
+---
+
+- name: install postgresql packages from distribution
+  apt:
+    pkg:
+      - postgresql
+      - python-psycopg2  # required for ansible
+      - python3-psycopg2  # required for ansible
+  notify: restart postgresql
+
+- name: get postgresql installed version
+  command: dpkg-query -f '${Version;3}' --show postgresql
+  when: postgresql_version is not defined
+  register: __postgresql_version_query_result
+  changed_when: false
+
+- name: set postgresql version fact
+  set_fact:
+    postgresql_version: "{{ __postgresql_version_query_result.stdout.split('+') | first }}"
+  when: postgresql_version is not defined
+
+- meta: flush_handlers  # run notified handlers now

@@ -1,0 +1,28 @@
+##
+## This file is maintained by Ansible - CHANGES WILL BE OVERWRITTEN
+##
+DATABASE_URL: postgres://{{ db_user }}:{{ db_pass }}@{{ db_server }}/{{ db_name }}
+SECRET_KEY_BASE: {{ secret_key_base }}
+RAILS_ENV: {{ deployment_environment }}
+APPLICATION_NAME: {{ decidim_app_name }}
+MAILER_SENDER: {{ decidim_mailer_sender }}
+SMTP_USERNAME: {{ smtp_username }}
+SMTP_PASSWORD: {{ smtp_password }}
+SMTP_ADDRESS: {{ smtp_address }}
+SMTP_DOMAIN: {{ smtp_domain }}
+SMTP_PORT: "{{ smtp_port }}"
+SMTP_STARTTLS_AUTO: "{{ smtp_starttls_auto }}"
+SMTP_AUTHENTICATION: {{ smtp_authentication }}
+SENTRY_DSN: {{ sentry_dsn }}
+{% if omniauth_facebook_enable == 'true' %}
+OMNIAUTH_FACEBOOK_APP_ID: {{ omniauth_facebook_app_id }}
+OMNIAUTH_FACEBOOK_APP_SECRET: {{ omniauth_facebook_app_secret }}
+{% endif %}
+{% if omniauth_twitter_enable == 'true' %}
+OMNIAUTH_TWITTER_API_KEY: {{ omniauth_twitter_api_key }}
+OMNIAUTH_TWITTER_API_SECRET: {{ omniauth_twitter_api_secret }}
+{% endif %}
+{% if omniauth_google_enable == 'true' %}
+OMNIAUTH_GOOGLE_CLIENT_ID: {{ omniauth_google_client_id }}
+OMNIAUTH_GOOGLE_CLIENT_SECRET: {{ omniauth_google_client_secret }}
+{% endif %}

@@ -1,0 +1,28 @@
+#!/bin/bash
+##
+## This file is maintained by Ansible - CHANGES WILL BE OVERWRITTEN
+##
+BACKUP_DIR="/backup"
+DATE=$(date "+%Y-%m-%d")
+PGUSER={{ db_user }}
+PGPASSWORD={{ db_pass }}
+DATABASE={{ db_name }}
+REMOTE_HOST={{ db_server }}
+REMOTE_PORT={{ db_port }}
+DAYS_TO_KEEP={{ backup_pg_days_to_keep }}
+BACKUP_TYPE="remote" # local or remote
+#
+mkdir -p ${BACKUP_DIR}
+chmod 700 ${BACKUP_DIR}
+if [ ${BACKUP_TYPE} == "local" ]; then
+  # backup all DB on local host
+  chown -R postgres. ${BACKUP_DIR}
+  su - postgres -c "pg_dumpall -U ${PG_USER} -f ${BACKUP_DIR}/pg_dumpall_${DATE}.bak"
+else
+  # backup decidim DB on remote host
+  export PGPASSWORD=${PGPASSWORD} && pg_dump -U ${PGUSER} -h ${REMOTE_HOST} -p ${REMOTE_PORT} -d ${DATABASE} -f ${BACKUP_DIR}/pg_dump_${DATABASE}_${DATE}.bak
+fi
+chown -R root. ${BACKUP_DIR}
+chmod 600 ${BACKUP_DIR}/*
+# cleanup
+find ${BACKUP_DIR} -type f -mtime +${DAYS_TO_KEEP} | xargs rm -R -f -v

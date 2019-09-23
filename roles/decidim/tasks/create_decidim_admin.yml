@@ -1,0 +1,30 @@
+---
+
+- name: check if decidim admin is done
+  stat:
+    path: "{{ decidim_home }}/{{ decidim_app_dir }}/create-decidim-admin.done"
+  register: create_decidim_admin_done
+
+- name: create temp file for dedicim admin creation
+  copy:
+    dest: "{{ decidim_home }}/{{ decidim_app_dir }}/init-decidim.rb"
+    content: |
+      email = "{{ decidim_admin_email }}"
+      password = "{{ decidim_admin_password }}"
+      user = Decidim::System::Admin.new(email: email, password: password, password_confirmation: password)
+      user.save!
+      quit
+    owner: "{{ decidim_user }}"
+  when: create_decidim_admin_done.stat.exists == false
+
+- name: create decidim admin and remove temp file
+  shell: |
+    . $HOME/.rubyrc
+    bin/rails console -e {{ deployment_environment }} < init-decidim.rb
+    rm init-decidim.rb
+    touch create-decidim-admin.done
+  args:
+    chdir: "{{ decidim_home }}/{{ decidim_app_dir }}"
+  when: create_decidim_admin_done.stat.exists == false
+  become: yes
+  become_user: "{{ decidim_user }}"

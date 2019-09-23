@@ -1,0 +1,24 @@
+---
+# tasks file for decidim
+
+- when: override_default_file is file
+  include_vars: "{{ override_default_file }}"
+
+- include_tasks: create_linux_user.yml
+- include_tasks: install_ruby.yml
+- include_tasks: install_nodejs.yml
+- include_tasks: install_yarn.yml
+  when: yarn_install
+- include_tasks: install_decidim.yml
+- include_tasks: install_nginx.yml
+- include_tasks: install_letsencrypt.yml
+  when: letsencrypt_install
+- include_tasks: install_ssl_cert.yml
+  when: ssl_cert_install
+- include_tasks: create_decidim_db.yml
+- include_tasks: create_decidim_admin.yml
+- include_tasks: configure_delayed_job.yml
+- include_tasks: configure_omniauth.yml
+- include_tasks: configure_backups.yml
+- include_tasks: configure_antivirus.yml
+  when: use_decidim_antivirus

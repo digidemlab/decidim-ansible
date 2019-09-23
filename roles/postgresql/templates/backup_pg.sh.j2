@@ -1,0 +1,17 @@
+#!/bin/bash
+##
+## This file is maintained by Ansible - CHANGES WILL BE OVERWRITTEN
+##
+BACKUP_DIR="/backup"
+DATE=$(date "+%Y-%m-%d")
+DAYS_TO_KEEP={{ backup_pg_days_to_keep }}
+#
+mkdir -p ${BACKUP_DIR}
+chown -R postgres. ${BACKUP_DIR}
+chmod 700 ${BACKUP_DIR}
+# backup all BD
+su - postgres -c "pg_dumpall -U postgres -f ${BACKUP_DIR}/pg_dumpall_${DATE}.bak"
+chown -R root. ${BACKUP_DIR}
+chmod 600 ${BACKUP_DIR}/*
+# cleanup
+find ${BACKUP_DIR} -type f -mtime +${DAYS_TO_KEEP} | xargs rm -R -f -v

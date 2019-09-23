@@ -1,0 +1,39 @@
+---
+
+- name: create decidim backup script
+  template:
+    src: backup_decidim.sh.j2
+    dest: /usr/local/sbin/backup_decidim.sh
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+
+- name: schedule decidim backups in cron with state {{ backup_decidim_state }}
+  cron:
+    name: 'backup_decidim_cron'
+    hour: '23'
+    minute: '2'
+    job: '/usr/local/sbin/backup_decidim.sh {{ backup_decidim_type }} >/dev/null 2>&1'
+    state: "{{ backup_decidim_state }}"
+
+- name: install postgresql-client containing pg_dump used for backups
+  apt:
+    pkg: postgresql-client
+    state: "{{ backup_pg_state }}"
+
+- name: create postgresql backup script
+  template:
+    src: backup_pg.sh.j2
+    dest: /usr/local/sbin/backup_pg.sh
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+
+- name: schedule postgresql backups in cron with state {{ backup_pg_state }}
+  cron:
+    name: 'backup_pg_cron'
+    hour: '23'
+    minute: '0'
+    job: '/usr/local/sbin/backup_pg.sh >/dev/null 2>&1'
+    state: "{{ backup_pg_state }}"
+ 

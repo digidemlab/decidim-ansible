@@ -1,0 +1,9 @@
+---
+
+- name: create postgresql user(s)
+  postgresql_user:
+    name: "{{ db_user }}"
+    password: "{{ db_pass }}"
+    role_attr_flags: CREATEROLE,SUPERUSER,CREATEDB
+  become: yes
+  become_user: postgres

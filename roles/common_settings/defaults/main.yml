@@ -1,0 +1,94 @@
+---
+# defaults file for common_settings
+
+# general params
+ubuntu_dist_name: bionic
+timezone: Europe/Stockholm
+
+# deployment environment
+deployment_environment: production
+
+# postgresql params
+db_server: localhost
+db_port: '5432'
+db_name: decidim
+db_user: decidim
+db_pass: decidim
+
+# dev tools params
+ruby_major_version: '2.6'
+ruby_minor_version: '3'
+bundler_version: '1.17.3'
+nodejs_version: '10'
+yarn_install: false
+
+# decidim params
+decidim_version: '0.18.0'
+decidim_user: decidim
+decidim_group: decidim
+decidim_home: "/home/{{ decidim_user }}"
+decidim_app_dir: decidim-app
+decidim_server_name: decidim.your-decidim.org  # important for letsencrypt
+decidim_app_name: decidim
+decidim_organisation_name: My organisation
+decidim_mailer_sender: do-not-reply@your-decidim.org
+decidim_admin_email: decidim-admin@your-decidim.org  # cannot be changed with ansible after inital run
+decidim_admin_password: password  # cannot be changed with ansible after inital run
+decidim_available_locales: ':en, :fr, :sv'
+decidim_default_locale: ':en'
+decidim_log_level: ':debug'
+decidim_force_ssl: 'false'
+
+# to generate a new secret: cd ~/decidim-app && rake secret
+secret_key_base: 34d58192ebb9c7e60266514ce916ff9d37743d4a50c7c462281ddccae44d1c4db415208cd6c8dbfc6922414219aa91c53721623be7c97897531423a5a4cf04e5
+
+redis_listen_address: '127.0.0.1'
+redis_listen_port: '6379'
+redis_server_ip_address: '127.0.0.1'
+
+# requires role geerlingguy.clamav
+use_decidim_antivirus: false
+clamav_scan_hour: '3'
+clamav_scan_minute: '2'
+# geerlingguy.clamav vars:
+clamav_daemon_state: started
+clamav_daemon_enabled: true
+clamav_freshclam_daemon_state: started
+clamav_freshclam_daemon_enabled: true
+clamav_daemon_configuration_changes:
+  - regexp: '^.*FollowDirectorySymlinks .*$'
+    line: 'FollowDirectorySymlinks true'
+  - regexp: '^.*FollowFileSymlinks .*$'
+    line: 'FollowFileSymlinks true'
+
+smtp_username: smtpuser
+smtp_password: password
+smtp_address: smtp.gmail.com
+smtp_domain: gmail.com
+smtp_port: '587'
+smtp_starttls_auto: 'true'
+smtp_authentication: plain
+
+omniauth_facebook_enable: 'false'
+omniauth_facebook_app_id: 'your-facebook-app-id'
+omniauth_facebook_app_secret: 'your-facebook-app-secret'
+omniauth_twitter_enable: 'false'
+omniauth_twitter_api_key: 'your-twitter-api-key'
+omniauth_twitter_api_secret: 'your-twitter-api-secret'
+omniauth_google_enable: 'false'
+omniauth_google_client_id: 'your-google-client-id'
+omniauth_google_client_secret: 'your-google-client-secret'
+
+# daily cron jobs for backups
+backup_pg_state: present
+backup_pg_days_to_keep: '7'
+backup_decidim_state: present
+backup_decidim_days_to_keep: '7'
+backup_decidim_type: full  # full or partial
+
+# ssl cert params
+ssl_cert_install: false
+
+# letsencrypt params
+letsencrypt_install: false
+letsencrypt_admin_email: 'admin@your-decidim.org'

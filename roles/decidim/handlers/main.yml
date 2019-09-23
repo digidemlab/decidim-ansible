@@ -1,0 +1,35 @@
+---
+# handlers file for decidim
+
+# nginx handlers
+
+- name: restart nginx
+  service:
+    name: nginx
+    state: restarted
+
+- name: reload nginx
+  service:
+    name: nginx
+    state: reloaded
+
+# ruby handlers
+
+- name: bundle install
+  shell: |
+    . $HOME/.rubyrc
+    bundle install
+  args:
+    chdir: "{{ decidim_home }}/{{ decidim_app_dir }}"
+  become: yes
+  become_user: "{{ decidim_user }}"
+
+- name: rails assets recompile
+  shell: |
+    . $HOME/.rubyrc
+    RAILS_ENV={{ deployment_environment }} "{{ decidim_home }}"/.rbenv/shims/bundle exec rails assets:precompile
+  args:
+    chdir: "{{ decidim_home }}/{{ decidim_app_dir }}"
+  notify: restart nginx
+  become: yes
+  become_user: "{{ decidim_user }}"

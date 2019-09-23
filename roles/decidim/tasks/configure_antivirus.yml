@@ -1,0 +1,20 @@
+---
+
+# we use decidim-antivirus gem for live scans (wich requires clamav)
+#  ref. https://github.com/mainio/decidim-module-antivirus
+# we also use daily scheduled scans
+
+- name: create quarantine directory for daily clamav scan
+  file:
+    path: "{{ decidim_home }}/quarantine"
+    state: directory
+    owner: "{{ decidim_user }}"
+    group: "{{ decidim_user }}"
+
+- name: schedule daily clamav scan
+  cron:
+    name: 'clamav_daily_scan_cron'
+    hour: "{{ clamav_scan_hour }}"
+    minute: "{{ clamav_scan_minute }}"
+    job: "/usr/bin/clamdscan --move={{ decidim_home }}/quarantine --log=/var/log/clamav/clamdscan.log --multiscan {{ decidim_home }}/{{ decidim_app_dir }}/public/uploads >/dev/null 2>&1"
+

@@ -1,0 +1,12 @@
+---
+# handlers file for redis
+
+- name: restart redis
+  service:
+    name: redis
+    state: restarted
+
+- name: systemctl daemon-reload
+  shell: systemctl daemon-reload
+  notify: restart redis
+   

@@ -1,0 +1,20 @@
+---
+
+- name: add letsencrypt (certbot) package repo
+  apt_repository:
+    repo: ppa:certbot/certbot
+
+- name: install certbot package
+  apt:
+    pkg: python-certbot-nginx
+    update_cache: yes
+
+# TODO http2 is not yet suppported by certbot (fix here and in template)
+- name: configure certbot (please check results at https://www.ssllabs.com/ssltest/analyze.html?d={{ decidim_server_name }} )
+  # use -v to debug
+  shell: "certbot --non-interactive --preferred-challenges http --agree-tos --email {{ letsencrypt_admin_email }} --nginx -d {{ decidim_server_name }}"
+  args:
+    creates: "/etc/letsencrypt/live/{{ decidim_server_name }}/fullchain.pem;"
+  notify: restart nginx
+
+# note. certbot creates automaticaly a cron entry with this file: /etc/cron.d/certbot

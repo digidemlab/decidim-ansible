@@ -1,0 +1,22 @@
+##
+## This file is maintained by Ansible - CHANGES WILL BE OVERWRITTEN
+##
+server {
+  listen 80;
+  server_name {{ decidim_server_name }};
+  client_max_body_size 32M;
+  passenger_enabled on;
+  passenger_ruby {{ decidim_home }}/.rbenv/shims/ruby;
+  rails_env {{ deployment_environment }};
+  root {{ decidim_home }}/{{ decidim_app_dir }}/public;
+  limit_req zone=one burst=10;
+
+{% if ssl_cert_install %}
+    listen 443 ssl http2;
+    ssl_certificate /etc/nginx/ssl/{{ decidim_server_name }}/fullchain.pem;
+    ssl_certificate_key /etc/nginx/ssl/{{ decidim_server_name }}/privkey.pem;
+    include /etc/nginx/options-ssl-nginx.conf;
+    ssl_dhparam /etc/nginx/ssl/ssl-dhparams.pem;
+{% endif %}
+
+}

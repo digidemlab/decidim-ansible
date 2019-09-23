@@ -1,0 +1,23 @@
+---
+
+# TODO how to revert this when switching
+
+# configure delayed_job with sidekiq : make sure a host has the redis role
+# ref. https://github.com/Platoniq/decidim-install/blob/master/decidim-aws.md
+- name: configure delayed_job with sidekiq
+  block:
+
+  - name: create sidekiq systemd service file
+    template:
+      src: sidekiq.service.j2
+      dest: /etc/systemd/system/sidekiq.service
+      owner: root
+      group: root
+
+  - name: enable and start sidekiq service
+    systemd:
+      name: sidekiq
+      enabled: yes
+      state: started
+      daemon_reload: yes
+  # end-block

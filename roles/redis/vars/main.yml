@@ -1,0 +1,5 @@
+---
+# vars file for redis
+
+redis_listen_address: '127.0.0.1'
+redis_listen_port: '6379'

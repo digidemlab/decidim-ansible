@@ -1,0 +1,10 @@
+---
+# tasks file for postgresql
+
+- when: override_default_file is file
+  include_vars: "{{ override_default_file }}"
+
+#- include_tasks: install_pgdg  # postgresql from upstream
+- include_tasks: install_pg.yml  # postgresql from distribution
+- include_tasks: configure_pg.yml
+- include_tasks: create_db_user.yml

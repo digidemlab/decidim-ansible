@@ -1,0 +1,53 @@
+---
+
+- name: apt public key for nginx
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: 561F9B9CAC40B2F7
+    state: present
+
+- name: add nginx/passenger package repo
+  apt_repository:
+    repo: "deb https://oss-binaries.phusionpassenger.com/apt/passenger {{ ubuntu_dist_name }} main"
+    state: present
+
+- name: install nginx
+  apt:
+    pkg:
+      - nginx
+      - libnginx-mod-http-passenger
+    update_cache: yes
+
+- name: ensure nginx service is enabled
+  service:
+    name: nginx
+    enabled: yes
+
+- name: remove default nginx site
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  notify: restart nginx
+
+- name: add rate limiting
+  copy:
+    dest: /etc/nginx/conf.d/decidim-rate-limit.conf
+    content: |
+      limit_req_zone $binary_remote_addr zone=one:10m rate=5r/s;
+  notify: restart nginx
+
+- name: create nginx decidim.conf
+  template:
+    src: decidim.conf.j2
+    dest: /etc/nginx/sites-enabled/decidim.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart nginx
+
+- name: fix mod-http-passenger.conf
+  lineinfile:
+    path: /etc/nginx/conf.d/mod-http-passenger.conf
+    regexp: 'passenger_ruby'
+    line: "passenger_ruby {{ decidim_home }}/.rbenv/shims/ruby;"
+  notify: restart nginx
