@@ -4,36 +4,24 @@ This Ansible playbook sets up all the necessary components for your Decidim app 
 
 To make it work with your app, you need to set a handful of things:
 - Sidekiq
-- ...
+- Figaro
+- Passenger
 
-
-Requirements
-------------
+## Requirements
 
 Ansible >= 2.8
 
-Role Variables
---------------
+## Role Variables
 
 All roles variable can be overridden. Default values can be found in roles/common_settings/default/main.yml.
 
-Dependencies
-------------
-
-This playbook has been tested with LXD.
-
-Quick start
------------
+## Quick start
 
 - Create a clean Ubuntu 18.04 server
-
 - Run the playbook
-License
--------
 
-LiLiQ
+## Credits
 
-Author Information
-------------------
-
-claude.durocher@sct.gouv.qc.ca.
+Made with a lot of help from:
+- [Ivan Verges](https://github.com/microstudi) and [Platoniq's guide to install Decidim](https://github.com/Platoniq/decidim-install)
+- Claude Durocher and his [install scripts](https://gitlab.forge.gouv.qc.ca/claude.durocher/decidim/tree/master).
