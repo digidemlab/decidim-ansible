@@ -1,0 +1,48 @@
+---
+# launch ansible with: --tags patch
+# update of gems is managed by install_decidim.yml
+
+- name: upgrade decidim
+  block:
+
+  - name: migrate database when upgrading to a new decidim version
+    shell: |
+      . $HOME/.rubyrc
+      rails decidim:upgrade
+      rails db:migrate
+    args:
+      chdir: "{{ decidim_home }}/{{ decidim_app_dir }}"
+    environment:
+      RAILS_ENV: '{{ deployment_environment }}'
+
+  - name: create local replica of custom_upgrades_rails_filetree directory
+    file:
+      path: "{{ decidim_home }}/{{ custom_upgrades_rails_filetree }}"
+      state: directory
+
+  - name: copy upgrade files to apply into custom_upgrades_rails_filetree
+    template:
+      src: "{{ item.src }}"
+      dest: "{{ decidim_home }}/{{ custom_upgrades_rails_filetree }}/{{ item.path }}"
+    register: list_of_custom_upgrades_rails_filetree
+    with_filetree: "{{ custom_upgrades_rails_filetree }}"
+    when:
+      - item.state == 'file'
+      - not ansible_check_mode
+    changed_when: false
+
+  - name: run special upgrade tasks if present
+    shell: |
+      . $HOME/.rubyrc
+      rails console < {{ decidim_home }}/{{ custom_upgrades_rails_filetree }}/{{ item.path }} > {{ item.path }}.done
+    args:
+      chdir: "{{ decidim_home }}/{{ decidim_app_dir }}"
+      creates: "{{ decidim_home }}/{{ decidim_app_dir }}/{{ item.path }}.done"
+    environment:
+      RAILS_ENV: '{{ deployment_environment }}'
+    with_items:
+      - "{{ list_of_custom_upgrades_rails_filetree.results | map(attribute='item') | list }}"
+
+  become: yes
+  become_user: "{{ decidim_user }}"
+  # end-block upgrade decidim

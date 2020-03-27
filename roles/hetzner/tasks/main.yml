@@ -1,0 +1,35 @@
+---
+
+- when: override_default_file is file
+  include_vars: "{{ override_default_file }}"
+
+#- name: Install required packages
+#  apt:
+#    pkg:
+#      - python3-pip
+#      - python3-setuptools
+#    update_cache: no
+
+- name: Install hcloud-python
+  pip:
+    name: hcloud
+  become: True
+
+- name: Create a basic server
+  hcloud_server:
+      api_token: "{{ hetzner_token }}"
+      name: "{{ decidim_app_name }}"
+      server_type: cx21
+      image: ubuntu-18.04
+      location: hel1
+      ssh_keys:
+      - macbook
+      - jenkins
+      state: present
+  register: server
+  become: True
+
+- name: Save server IP
+  add_host:
+    name: "{{ server.hcloud_server.ipv4_address }}"
+    groups: server

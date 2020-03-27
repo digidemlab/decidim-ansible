@@ -14,6 +14,8 @@ SMTP_PORT: "{{ smtp_port }}"
 SMTP_STARTTLS_AUTO: "{{ smtp_starttls_auto }}"
 SMTP_AUTHENTICATION: {{ smtp_authentication }}
 SENTRY_DSN: {{ sentry_dsn }}
+GEOCODER_LOOKUP_APP_ID: {{ here_maps_id }}
+GEOCODER_LOOKUP_APP_CODE: {{ here_maps_code }}
 {% if omniauth_facebook_enable == 'true' %}
 OMNIAUTH_FACEBOOK_APP_ID: {{ omniauth_facebook_app_id }}
 OMNIAUTH_FACEBOOK_APP_SECRET: {{ omniauth_facebook_app_secret }}

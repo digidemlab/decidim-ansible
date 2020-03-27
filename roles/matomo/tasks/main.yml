@@ -1,0 +1,34 @@
+---
+
+- when: override_default_file is file
+  include_vars: "{{ override_default_file }}"
+
+- name: Check if website already exists on Matomo
+  uri:
+    url: "{{ matomo_server_address }}?module=API&method=SitesManager.getSitesIdFromSiteUrl&url=https://{{ domain }}&format=json&token_auth={{ matomo_token }}"
+    method: GET
+    status_code: 200
+  register: response
+  become_user: True
+
+- name: Create new website on Matomo
+  uri:
+    url: "{{ matomo_server_address }}?module=API&method=SitesManager.addSite&siteName=decidim-{{ app_name }}&urls[0]=https://{{ domain }}&timezone=Europe/Stockholm&format=json&token_auth={{ matomo_token }}"
+    method: GET
+    status_code: 200
+  become_user: True
+  register: created
+  when: (response.json | length == 0)
+
+- name: Update existing website on Matomo
+  uri:
+    url: "{{ matomo_server_address }}?module=API&method=SitesManager.updateSite&idSite={{ response.json[0].idsite }}&siteName=decidim-{{ app_name }}&urls[0]=https://{{ domain }}&timezone=Europe/Stockholm&format=json&token_auth={{ matomo_token }}"
+    method: GET
+    status_code: 200
+  become_user: True
+  when: (response.json | length > 0)
+
+- set_fact:
+     matomo_site_id: "{{ response.json[0].idsite if (response.json | length > 0) else created.json.value }}"
+     delegate_to: "{{ server.hcloud_server.ipv4_address }}"
+     delegate_facts: true

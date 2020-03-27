@@ -2,3 +2,4 @@
 /ansible.log
 
 /custom_settings/vars.yml
+/custom_settings/vars*.yml

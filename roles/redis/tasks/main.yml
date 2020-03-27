@@ -45,32 +45,3 @@
     regexp: '^port .*$'
     replace: "port {{ redis_listen_port }}"
   notify: restart redis
-
-# Redis optimization (not working on LXD!!!)
-# Transparent Huge Pages (THP) support is enabled by default in kernel. This will create latency and memory usage issues with Redis. 
-#- name: disable Transparent Huge Pages (THP) support in kernel
-  #shell: |
-    #echo never > /sys/kernel/mm/transparent_hugepage/enabled
-    #touch disable-thp.done
-  #args:
-    #creates: disable-thp.done
-  #notify: restart redis
-
-#- name: disable Transparent Huge Pages (THP) support in kernel at reboot
-  #copy:
-    #dest: /etc/rc.local
-    #content: |
-      ##!/bin/sh -e
-      #echo never > /sys/kernel/mm/transparent_hugepage/enabled
-      #exit 0
-    #mode: '0755'
-
-#- name: set vm.overcommit_memory = 1
-  #sysctl: 
-    #name: vm.overcommit_memory
-    #value: '1'
-    #sysctl_set: yes
-    #state: present
-    #reload: yes
-
-# TODO secure redis?

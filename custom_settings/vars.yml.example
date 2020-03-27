@@ -7,7 +7,7 @@ decidim_app_dir: decidim-sweden
 decidim_app_repo: https://github.com/digidemlab/decidim-sweden.git
 decidim_app_branch: vps
 
-decidim_server_name: your-decidim.org  # important for letsencrypt
+domain: your-decidim.org  # important for letsencrypt
 decidim_app_name: decidim-sweden
 
 decidim_mailer_sender: do-not-reply@your-decidim.org

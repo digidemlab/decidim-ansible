@@ -4,6 +4,11 @@
 - when: override_default_file is file
   include_vars: "{{ override_default_file }}"
 
+- name: Get facts from local roles
+  set_fact:
+    matomo_site_id: "{{ hostvars['localhost'].matomo_site_id }}"
+    sentry_dsn: "{{ hostvars['localhost'].sentry_dsn }}"
+
 - name: upgrade all packages in container
   apt:
     update_cache: yes

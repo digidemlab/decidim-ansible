@@ -23,13 +23,17 @@ nodejs_version: '10'
 yarn_install: false
 
 # decidim params
-decidim_version: '0.18.0'
+
+app_name: demo
+parent_domain: demokratiskastader.se
+
+decidim_version: '0.20.0'
 decidim_user: decidim
 decidim_group: decidim
 decidim_home: "/home/{{ decidim_user }}"
 decidim_app_dir: decidim-app
-decidim_server_name: decidim.your-decidim.org  # important for letsencrypt
-decidim_app_name: decidim
+domain: "{{ app_name }}.{{ parent_domain}}"
+decidim_app_name: decidim-{{ app_name }}
 decidim_organisation_name: My organisation
 decidim_mailer_sender: do-not-reply@your-decidim.org
 decidim_admin_email: decidim-admin@your-decidim.org  # cannot be changed with ansible after inital run

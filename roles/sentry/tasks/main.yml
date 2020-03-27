@@ -1,0 +1,42 @@
+---
+
+- when: override_default_file is file
+  include_vars: "{{ override_default_file }}"
+
+- name: Check if website already exists on Sentry
+  uri:
+    url: "https://sentry.io/api/0/projects/digidem-lab/{{ decidim_app_name }}/"
+    method: GET
+    headers:
+      Authorization: "Bearer {{ sentry_token }}"
+    status_code: 200, 404
+  register: response
+  become_user: True
+
+- name: Create a new project on Sentry
+  uri:
+    url: https://sentry.io/api/0/teams/digidem-lab/digidem-lab/projects/
+    method: POST
+    body_format: json
+    headers:
+      Authorization: "Bearer {{ sentry_token }}"
+    body:
+      name: "{{ app_name }}"
+    status_code: 201
+  become_user: True
+  when: '"The requested resource does not exist" in response.json'
+
+- name: Retrieve the Sentry project key
+  uri:
+    url: "https://sentry.io/api/0/projects/digidem-lab/{{ decidim_app_name }}/keys/"
+    method: GET
+    headers:
+      Authorization: "Bearer {{ sentry_token }}"
+    status_code: 200
+  register: response
+  become_user: True
+
+- set_fact:
+     sentry_dsn: "{{ response.json[0].dsn.public }}"
+     delegate_to: "{{ server.hcloud_server.ipv4_address }}"
+     delegate_facts: true
