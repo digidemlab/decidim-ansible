@@ -37,3 +37,19 @@ ssl_cert_install: false
 # use Let's encrypt certificate
 letsencrypt_install: true
 letsencrypt_admin_email: system@example.org
+
+# Here maps
+here_api_key:
+
+# Sentry
+sentry_token:
+
+# Hetzner token
+hetzner_token:
+
+# Gandi
+production_api_key:
+
+# Matomo auth token
+matomo_server_address: https://matomo.example.org
+matomo_token:

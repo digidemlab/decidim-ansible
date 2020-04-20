@@ -21,14 +21,14 @@
     headers:
       Authorization: "Bearer {{ sentry_token }}"
     body:
-      name: "{{ app_name }}"
+      name: "decidim-{{ app_name }}"
     status_code: 201
   become_user: True
   when: '"The requested resource does not exist" in response.json'
 
 - name: Retrieve the Sentry project key
   uri:
-    url: "https://sentry.io/api/0/projects/digidem-lab/{{ decidim_app_name }}/keys/"
+    url: "https://sentry.io/api/0/projects/digidem-lab/decidim-{{ app_name }}/keys/"
     method: GET
     headers:
       Authorization: "Bearer {{ sentry_token }}"
