@@ -50,6 +50,8 @@ hetzner_token:
 # Gandi
 production_api_key:
 
-# Matomo auth token
+# Matomo
+set_up_analytics: true
 matomo_server_address: https://matomo.example.org
-matomo_token:
+matomo_write_token:
+matomo_view_token:

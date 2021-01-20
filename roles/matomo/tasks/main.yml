@@ -5,7 +5,7 @@
 
 - name: Check if website already exists on Matomo
   uri:
-    url: "{{ matomo_server_address }}?module=API&method=SitesManager.getSitesIdFromSiteUrl&url=https://{{ domain }}&format=json&token_auth={{ matomo_token }}"
+    url: "{{ matomo_server_address }}?module=API&method=SitesManager.getSitesIdFromSiteUrl&url=https://{{ domain }}&format=json&token_auth={{ matomo_write_token }}"
     method: GET
     status_code: 200
   register: response
@@ -13,7 +13,7 @@
 
 - name: Create new website on Matomo
   uri:
-    url: "{{ matomo_server_address }}?module=API&method=SitesManager.addSite&siteName=decidim-{{ app_name }}&urls[0]=https://{{ domain }}&timezone=Europe/Stockholm&format=json&token_auth={{ matomo_token }}"
+    url: "{{ matomo_server_address }}?module=API&method=SitesManager.addSite&siteName=decidim-{{ app_name }}&urls[0]=https://{{ domain }}&timezone=Europe/Stockholm&format=json&token_auth={{ matomo_write_token }}"
     method: GET
     status_code: 200
   become_user: True
@@ -22,7 +22,7 @@
 
 - name: Update existing website on Matomo
   uri:
-    url: "{{ matomo_server_address }}?module=API&method=SitesManager.updateSite&idSite={{ response.json[0].idsite }}&siteName=decidim-{{ app_name }}&urls[0]=https://{{ domain }}&timezone=Europe/Stockholm&format=json&token_auth={{ matomo_token }}"
+    url: "{{ matomo_server_address }}?module=API&method=SitesManager.updateSite&idSite={{ response.json[0].idsite }}&siteName=decidim-{{ app_name }}&urls[0]=https://{{ domain }}&timezone=Europe/Stockholm&format=json&token_auth={{ matomo_write_token }}"
     method: GET
     status_code: 200
   become_user: True

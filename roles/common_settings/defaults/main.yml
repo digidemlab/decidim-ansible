@@ -27,7 +27,6 @@ yarn_install: false
 app_name: demo
 parent_domain: demokratiskastader.se
 
-decidim_version: '0.20.0'
 decidim_user: decidim
 decidim_group: decidim
 decidim_home: "/home/{{ decidim_user }}"
@@ -94,5 +93,29 @@ backup_decidim_type: full  # full or partial
 ssl_cert_install: false
 
 # letsencrypt params
+
 letsencrypt_install: false
 letsencrypt_admin_email: 'admin@your-decidim.org'
+
+# Here maps
+here_api_key: your-api-key-here
+
+# Sentry
+set_up_error_tracking: true
+sentry_token: your-token-here
+
+# Hetzner token
+set_up_server: true
+hetzner_token: your-token-here
+hetzner_server_type: cx21
+hetzner_backups: no
+
+# Gandi
+set_up_domain_name: true
+production_api_key: your-api-key-here
+
+# Matomo
+set_up_analytics: true
+matomo_server_address: https://matomo.digidemlab.org
+matomo_write_token: your_token_here
+matomo_view_token: your_token_here

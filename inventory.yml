@@ -6,7 +6,7 @@ decidim_servers:
         localhost:
       vars:
         ansible_connection: local
-        ansible_python_interpreter: /Users/Pierre/.pyenv/shims/python
+        ansible_python_interpreter: /opt/homebrew/bin/python3
     server:
       hosts:
       vars:

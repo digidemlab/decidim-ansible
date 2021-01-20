@@ -11,6 +11,15 @@
 
   - meta: flush_handlers  # run notified handlers now
 
+  - name: bundle install
+    shell: |
+      . $HOME/.rubyrc
+      bundle install
+    args:
+      chdir: "{{ decidim_home }}/{{ decidim_app_dir }}"
+    become: yes
+    become_user: "{{ decidim_user }}"
+
   - name: bundle exec figaro install
     shell: |
       . $HOME/.rubyrc
