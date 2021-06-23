@@ -24,6 +24,7 @@
   roles:
     - role: common_settings
     - role: init_container
+    - role: logrotate
     - role: geerlingguy.clamav
     - role: postgresql
     - role: redis

@@ -16,29 +16,32 @@ db_user: decidim
 db_pass: decidim
 
 # dev tools params
-ruby_major_version: '2.6'
-ruby_minor_version: '3'
-bundler_version: '1.17.3'
+ruby_major_version: '2.7'
+ruby_minor_version: '2'
+bundler_version: '2.1.4'
 nodejs_version: '10'
 yarn_install: false
 
 # decidim params
 
 app_name: demo
-parent_domain: demokratiskastader.se
+
+decidim_app_repo: https://github.com/digidemlab/decidim-sweden.git
 
 decidim_user: decidim
 decidim_group: decidim
 decidim_home: "/home/{{ decidim_user }}"
-decidim_app_dir: decidim-app
-domain: "{{ app_name }}.{{ parent_domain}}"
+decidim_app_dir: decidim
+parent_domain: demokratiskastader.se
+sub_domain: decidim
+domain: "{{ sub_domain }}.{{ parent_domain}}"
 decidim_app_name: decidim-{{ app_name }}
 decidim_organisation_name: My organisation
 decidim_mailer_sender: do-not-reply@your-decidim.org
 decidim_admin_email: decidim-admin@your-decidim.org  # cannot be changed with ansible after inital run
 decidim_admin_password: password  # cannot be changed with ansible after inital run
-decidim_available_locales: ':en, :fr, :sv'
-decidim_default_locale: ':en'
+decidim_available_locales: "[:en, :sv]"
+decidim_default_locale: ":sv"
 decidim_log_level: ':debug'
 decidim_force_ssl: 'false'
 
@@ -116,6 +119,6 @@ production_api_key: your-api-key-here
 
 # Matomo
 set_up_analytics: true
-matomo_server_address: https://matomo.digidemlab.org
+matomo_server_address: https://matomo.digidemlab.org/
 matomo_write_token: your_token_here
 matomo_view_token: your_token_here

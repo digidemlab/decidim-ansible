@@ -5,7 +5,7 @@
 
 - name: Check if website already exists on Sentry
   uri:
-    url: "https://sentry.io/api/0/projects/digidem-lab/{{ decidim_app_name }}/"
+    url: "https://sentry.digidemlab.org/api/0/projects/digidemlab/{{ decidim_app_name }}/"
     method: GET
     headers:
       Authorization: "Bearer {{ sentry_token }}"
@@ -15,20 +15,20 @@
 
 - name: Create a new project on Sentry
   uri:
-    url: https://sentry.io/api/0/teams/digidem-lab/digidem-lab/projects/
+    url: https://sentry.digidemlab.org/api/0/teams/digidemlab/digidem-lab/projects/
     method: POST
     body_format: json
     headers:
       Authorization: "Bearer {{ sentry_token }}"
     body:
-      name: "decidim-{{ app_name }}"
+      name: "{{ decidim_app_name }}"
     status_code: 201
   become_user: True
   when: '"The requested resource does not exist" in response.json'
 
 - name: Retrieve the Sentry project key
   uri:
-    url: "https://sentry.io/api/0/projects/digidem-lab/decidim-{{ app_name }}/keys/"
+    url: "https://sentry.digidemlab.org/api/0/projects/digidemlab/{{ decidim_app_name }}/keys/"
     method: GET
     headers:
       Authorization: "Bearer {{ sentry_token }}"

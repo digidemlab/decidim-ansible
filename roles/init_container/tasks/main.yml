@@ -13,6 +13,10 @@
   apt:
     update_cache: yes
     upgrade: yes
+  when: ansible_distribution == 'Ubuntu'
+
+- name: remove old packages
+  apt:
     autoremove: yes
   when: ansible_distribution == 'Ubuntu'
 
@@ -25,3 +29,13 @@
 - name: set machine timezone to "{{ timezone }}"
   timezone:
     name: "{{ timezone }}"
+
+- name: ensure journalctl will not eat whole disk
+  replace:
+    path: /etc/systemd/journald.conf
+    regexp: '^#SystemMaxUse.*'
+    replace: "SystemMaxUse=100M"
+
+- name: restart journald
+  become: true
+  systemd: name=systemd-journald state=restarted
