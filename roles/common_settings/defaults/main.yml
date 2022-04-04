@@ -17,9 +17,9 @@ db_pass: decidim
 
 # dev tools params
 ruby_major_version: '2.7'
-ruby_minor_version: '2'
+ruby_minor_version: '5'
 bundler_version: '2.1.4'
-nodejs_version: '10'
+nodejs_version: '16'
 yarn_install: false
 
 # decidim params

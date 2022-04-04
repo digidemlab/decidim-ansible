@@ -9,22 +9,27 @@
     matomo_site_id: "{{ hostvars['localhost'].matomo_site_id }}"
     sentry_dsn: "{{ hostvars['localhost'].sentry_dsn }}"
 
+- name: Remove apt lock files
+  file: path={{ item }} state=absent
+  with_items:
+    - /var/lib/apt/lists/lock
+    - /var/cache/apt/archives/lock
+    - /var/lib/dpkg/lock-frontend
+
+- name: install ca-certificates
+  apt:
+    pkg: ca-certificates
+    update_cache: yes
+
 - name: upgrade all packages in container
   apt:
     update_cache: yes
     upgrade: yes
-  when: ansible_distribution == 'Ubuntu'
 
 - name: remove old packages
   apt:
     autoremove: yes
   when: ansible_distribution == 'Ubuntu'
-
-- name: upgrade all packages in container
-  yum:
-    name: '*'
-    state: 'latest'
-  when: ansible_distribution == 'Centos'
 
 - name: set machine timezone to "{{ timezone }}"
   timezone:
