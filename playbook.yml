@@ -28,4 +28,5 @@
     - role: geerlingguy.clamav
     - role: postgresql
     - role: redis
+    - role: bot_blocker
     - role: decidim

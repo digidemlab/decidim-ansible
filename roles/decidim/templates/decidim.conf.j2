@@ -11,6 +11,10 @@ server {
   root {{ decidim_home }}/{{ decidim_app_dir }}/public;
   limit_req zone=one burst=10;
 
+  # Bad Bot Blocker
+  include /etc/nginx/bots.d/ddos.conf;
+  include /etc/nginx/bots.d/blockbots.conf;
+
 {% if ssl_cert_install %}
     listen 443 ssl http2;
     ssl_certificate /etc/nginx/ssl/{{ domain }}/fullchain.pem;

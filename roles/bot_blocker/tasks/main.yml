@@ -1,0 +1,25 @@
+---
+
+- name: Download install-ngxblocker
+  get_url:
+    url: https://raw.githubusercontent.com/mitchellkrogza/nginx-ultimate-bad-bot-blocker/master/install-ngxblocker
+    dest: /usr/local/sbin/install-ngxblocker.sh
+    mode: '+x'
+
+- name: Execute the install script
+  shell: install-ngxblocker.sh -x
+  args:
+    chdir: /usr/local/sbin/
+
+- name: Make setup and update scripts executable
+  file: path={{ item }} mode=+x
+  with_items:
+    - /usr/local/sbin/setup-ngxblocker
+    - /usr/local/sbin/update-ngxblocker
+
+- name: Update the blocker with cron
+  cron:
+    name: 'update_ultimate_bad_bot_blocker'
+    hour: '23'
+    minute: '17'
+    job: '/usr/local/sbin/update-ngxblocker -n'
