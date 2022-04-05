@@ -5,7 +5,7 @@
     path: "{{ decidim_home }}/{{ decidim_app_dir }}/create-decidim-admin.done"
   register: create_decidim_admin_done
 
-- name: create temp file for dedicim admin creation
+- name: create temp file for decidim admin creation
   copy:
     dest: "{{ decidim_home }}/{{ decidim_app_dir }}/init-decidim.rb"
     content: |

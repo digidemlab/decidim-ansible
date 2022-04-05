@@ -1,11 +1,5 @@
 ---
 
-- name: install required postgresql packages for ansible
-  apt:
-    pkg:
-      - python-psycopg2
-      - python3-psycopg2
-
 - name: check if decidim database is present
   postgresql_query:
     db: postgres

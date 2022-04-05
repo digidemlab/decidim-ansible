@@ -6,16 +6,17 @@
     id: 561F9B9CAC40B2F7
     state: present
 
-- name: add nginx/passenger package repo
-  apt_repository:
-    repo: "deb https://oss-binaries.phusionpassenger.com/apt/passenger {{ ubuntu_dist_name }} main"
-    state: present
+- name: add nginx/passenger and maxmind package repo
+  apt_repository: repo={{ item }} state=present
+  with_items:
+    - "deb https://oss-binaries.phusionpassenger.com/apt/passenger {{ ubuntu_dist_name }} main"
 
-- name: install nginx
+- name: install geoipupdate, nginx and two modules
   apt:
     pkg:
       - nginx
       - libnginx-mod-http-passenger
+
     update_cache: yes
 
 - name: ensure nginx service is enabled

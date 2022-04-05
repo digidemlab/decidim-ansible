@@ -50,10 +50,10 @@
 
   - name: ensure sshd_config setting
     lineinfile:
-      dest: "/etc/ssh/sshd_config"
+      dest: /etc/ssh/sshd_config
       regexp: "{{ item }}"
       line: "{{ security_sshd_settings[item] }}"
-      state: "present"
+      state: present
     with_items:
       - "{{ security_sshd_settings | list }}"
     # TODO bug: timeout on restart ssh

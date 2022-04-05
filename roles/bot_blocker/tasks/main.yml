@@ -4,7 +4,7 @@
   get_url:
     url: https://raw.githubusercontent.com/mitchellkrogza/nginx-ultimate-bad-bot-blocker/master/install-ngxblocker
     dest: /usr/local/sbin/install-ngxblocker.sh
-    mode: '+x'
+    mode: +x
 
 - name: Execute the install script
   shell: install-ngxblocker.sh -x
@@ -19,7 +19,14 @@
 
 - name: Update the blocker with cron
   cron:
-    name: 'update_ultimate_bad_bot_blocker'
+    name: update_ultimate_bad_bot_blocker
     hour: '23'
     minute: '17'
-    job: '/usr/local/sbin/update-ngxblocker -n'
+    job: /usr/local/sbin/update-ngxblocker -n
+
+- name: Comment out server_names_hash_bucket_size
+  lineinfile:
+    path: /etc/nginx/conf.d/botblocker-nginx-settings.conf
+    regexp: 'server_names_hash_bucket_size'
+    line: "# server_names_hash_bucket_size 256;"
+  notify: restart nginx

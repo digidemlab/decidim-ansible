@@ -8,7 +8,7 @@
 - name: copy decidim.conf
   copy:
     src: decidim.conf
-    dest: '/etc/logrotate.d/decidim.conf'
-    owner: 'root'
-    group: 'root'
+    dest: /etc/logrotate.d/decidim.conf
+    owner: root
+    group: root
     mode: '0644'

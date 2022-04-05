@@ -13,7 +13,7 @@
 
 - name: schedule daily clamav scan
   cron:
-    name: 'clamav_daily_scan_cron'
+    name: clamav_daily_scan_cron
     hour: "{{ clamav_scan_hour }}"
     minute: "{{ clamav_scan_minute }}"
     job: "/usr/bin/clamdscan --move={{ decidim_home }}/quarantine --log=/var/log/clamav/clamdscan.log --multiscan {{ decidim_home }}/{{ decidim_app_dir }}/public/uploads >/dev/null 2>&1"

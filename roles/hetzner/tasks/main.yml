@@ -20,7 +20,7 @@
       api_token: "{{ hetzner_token }}"
       name: "{{ decidim_app_name }}"
       server_type: "{{ hetzner_server_type }}"
-      image: ubuntu-18.04
+      image: ubuntu-20.04
       location: hel1
       backups: "{{ hetzner_backups }}"
       ssh_keys:

@@ -1,12 +1,8 @@
 ---
 
-- name: add letsencrypt (certbot) package repo
-  apt_repository:
-    repo: ppa:certbot/certbot
-
 - name: install certbot package
   apt:
-    pkg: python-certbot-nginx
+    pkg: python3-certbot-nginx
     update_cache: yes
 
 # TODO http2 is not yet suppported by certbot (fix here and in template)

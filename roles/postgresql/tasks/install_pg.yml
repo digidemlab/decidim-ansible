@@ -4,7 +4,6 @@
   apt:
     pkg:
       - postgresql
-      - python-psycopg2  # required for ansible
       - python3-psycopg2  # required for ansible
   notify: restart postgresql
 

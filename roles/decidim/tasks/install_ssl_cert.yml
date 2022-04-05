@@ -4,16 +4,16 @@
   file:
     path: /etc/nginx/ssl
     state: directory
-    owner: 'root'
-    group: 'root'
+    owner: root
+    group: root
     mode: '700'
 
 - name: copy cert files
   copy:
     src: "{{ item }}"
-    dest: '/etc/nginx/ssl/'
-    owner: 'root'
-    group: 'root'
+    dest: /etc/nginx/ssl/
+    owner: root
+    group: root
     mode: '0644'
   with_fileglob: ssl/*
   notify: restart nginx
@@ -21,8 +21,8 @@
 - name: copy options-ssl-nginx.conf
   copy:
     src: options-ssl-nginx.conf
-    dest: '/etc/nginx/options-ssl-nginx.conf'
-    owner: 'root'
-    group: 'root'
+    dest: /etc/nginx/options-ssl-nginx.conf
+    owner: root
+    group: root
     mode: '0644'
   notify: restart nginx

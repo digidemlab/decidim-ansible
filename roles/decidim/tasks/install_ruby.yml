@@ -22,6 +22,14 @@
       - python # on further rerun, Ansible seems to look for Python 2
     state: present
 
+- name: Create a symlink to libffi.so.7
+  ansible.builtin.file:
+    src: /usr/lib/x86_64-linux-gnu/libffi.so.7
+    dest: /usr/lib/x86_64-linux-gnu/libffi.so.6
+    owner: root
+    group: root
+    state: link
+
 - name: install ruby and bundler
   block:
     - name: create environment source file for ruby
