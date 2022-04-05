@@ -15,7 +15,7 @@
 
 - name: Create a new project on Sentry
   uri:
-    url: https://sentry.digidemlab.org/api/0/teams/digidemlab/digidem-lab/projects/
+    url: https://sentry.digidemlab.org/api/0/teams/digidemlab/digidemlab/projects/
     method: POST
     body_format: json
     headers:
@@ -23,6 +23,19 @@
     body:
       name: "{{ decidim_app_name }}"
     status_code: 201
+  become_user: True
+  when: '"The requested resource does not exist" in response.json'
+
+- name: Update the new project
+  uri:
+    url: "https://sentry.digidemlab.org/api/0/projects/digidemlab/{{ decidim_app_name }}/"
+    method: PUT
+    body_format: json
+    headers:
+      Authorization: "Bearer {{ sentry_token }}"
+    body:
+      platform: "ruby-rails"
+    status_code: 200
   become_user: True
   when: '"The requested resource does not exist" in response.json'
 
