@@ -1,0 +1,22 @@
+geoip2 /var/lib/GeoIP/GeoLite2-Country.mmdb {
+    auto_reload 60m;
+    $geoip2_metadata_country_build metadata build_epoch;
+    $geoip2_data_country_code country iso_code;
+    $geoip2_data_country_name country names en;
+}
+
+geoip2 /var/lib/GeoIP/GeoLite2-City.mmdb {
+    auto_reload 60m;
+    $geoip2_metadata_city_build metadata build_epoch;
+    $geoip2_data_city_name city names en;
+}
+
+fastcgi_param COUNTRY_CODE $geoip2_data_country_code;
+fastcgi_param COUNTRY_NAME $geoip2_data_country_name;
+fastcgi_param CITY_NAME    $geoip2_data_city_name;
+
+map $geoip2_data_country_code $domain_xyz_allowed_country {
+    default yes;
+    IN no;
+    PK no;
+}

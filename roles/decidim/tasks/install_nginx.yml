@@ -16,6 +16,8 @@
     pkg:
       - nginx
       - libnginx-mod-http-passenger
+      - libnginx-mod-http-geoip2
+      - geoipupdate
 
     update_cache: yes
 
@@ -51,4 +53,33 @@
     path: /etc/nginx/conf.d/mod-http-passenger.conf
     regexp: 'passenger_ruby'
     line: "passenger_ruby {{ decidim_home }}/.rbenv/shims/ruby;"
+  notify: restart nginx
+
+- name: Edit GeoIP.conf
+  template:
+    src: GeoIP.conf.j2
+    dest: /etc/GeoIP.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart nginx
+
+- name: Update the GeoIP2 database
+  shell: geoipupdate
+
+- name: Add GeoIP2 update to cron
+  cron:
+    name: update_geoip2
+    weekday: '0,3'
+    hour: '23'
+    minute: '34'
+    job: geoipupdate
+
+- name: create nginx_geoip.conf
+  template:
+    src: nginx_geoip.conf.j2
+    dest: /etc/nginx/conf.d/nginx_geoip.conf
+    owner: root
+    group: root
+    mode: '0644'
   notify: restart nginx
