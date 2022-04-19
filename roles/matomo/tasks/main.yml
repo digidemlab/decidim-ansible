@@ -20,15 +20,26 @@
   register: created
   when: (response.json | length == 0)
 
+- set_fact:
+    idSite: "{{ response.json[0].idsite if (response.json | length > 0) else created.json.value }}"
+
+- name: Give view access to decidim user
+  uri:
+    url: "{{ matomo_server_address }}?module=API&method=UsersManager.setUserAccess&userLogin={{ matomo_view_user }}&access=view&idSites={{ idSite }}&format=json&token_auth={{ matomo_write_token }}"
+    method: GET
+    status_code: 200
+  become_user: True
+  when: (response.json | length == 0)
+
 - name: Update existing website on Matomo
   uri:
-    url: "{{ matomo_server_address }}?module=API&method=SitesManager.updateSite&idSite={{ response.json[0].idsite }}&siteName=decidim-{{ app_name }}&urls[0]=https://{{ domain }}&timezone=Europe/Stockholm&format=json&token_auth={{ matomo_write_token }}"
+    url: "{{ matomo_server_address }}?module=API&method=SitesManager.updateSite&idSite={{ idSite }}&siteName=decidim-{{ app_name }}&urls[0]=https://{{ domain }}&timezone=Europe/Stockholm&format=json&token_auth={{ matomo_write_token }}"
     method: GET
     status_code: 200
   become_user: True
   when: (response.json | length > 0)
 
 - set_fact:
-     matomo_site_id: "{{ response.json[0].idsite if (response.json | length > 0) else created.json.value }}"
+     matomo_site_id: "{{ idSite }}"
      delegate_to: "{{ server.hcloud_server.ipv4_address }}"
      delegate_facts: true
