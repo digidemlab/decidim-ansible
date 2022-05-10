@@ -42,5 +42,5 @@
     replace: "SystemMaxUse=100M"
 
 - name: restart journald
-  become: true
+  become: yes
   systemd: name=systemd-journald state=restarted

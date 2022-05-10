@@ -6,7 +6,6 @@
 
 - include_tasks: create_linux_user.yml
 - include_tasks: install_ruby.yml
-- include_tasks: install_nodejs.yml
 - include_tasks: install_yarn.yml
   when: yarn_install
 - include_tasks: install_decidim.yml

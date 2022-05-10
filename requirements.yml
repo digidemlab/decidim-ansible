@@ -1,0 +1,6 @@
+---
+roles:
+- name: grzegorznowak.nvm_node
+
+collections:
+- name: hetzner.hcloud

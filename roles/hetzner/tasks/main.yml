@@ -13,7 +13,7 @@
 - name: Install hcloud-python
   pip:
     name: hcloud
-  become: True
+  become: yes
 
 - name: Create a basic server
   hcloud_server:
@@ -28,7 +28,7 @@
       - jenkins
       state: present
   register: server
-  become: True
+  become: yes
 
 - name: Save server IP
   add_host:
