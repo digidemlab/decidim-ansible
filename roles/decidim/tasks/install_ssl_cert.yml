@@ -15,6 +15,7 @@
     owner: root
     group: root
     mode: '0644'
+    force: yes
   with_fileglob: ssl/*
   notify: restart nginx
 

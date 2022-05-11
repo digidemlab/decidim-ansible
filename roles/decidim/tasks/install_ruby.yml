@@ -22,6 +22,11 @@
       - python # on further rerun, Ansible seems to look for Python 2
     state: present
 
+- name: Check if libffi.so.7 exists
+  stat:
+    path: /usr/lib/x86_64-linux-gnu/libffi.so.7
+  register: libffiso7
+
 - name: Create a symlink to libffi.so.7
   ansible.builtin.file:
     src: /usr/lib/x86_64-linux-gnu/libffi.so.7
@@ -29,6 +34,7 @@
     owner: root
     group: root
     state: link
+  when: libffiso7.stat.exists
 
 - name: install ruby and bundler
   block:

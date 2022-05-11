@@ -10,6 +10,8 @@
     headers:
       Authorization: "Bearer {{ sentry_token }}"
     status_code: 200, 404
+  retries: 3
+  delay: 5
   register: response
   become_user: True
 
