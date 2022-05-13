@@ -18,7 +18,7 @@ db_pass: decidim
 # dev tools params
 ruby_major_version: '2.7'
 ruby_minor_version: '5'
-bundler_version: '2.1.4'
+bundler_version: '2.2.18'
 yarn_install: false
 
 # requires stephdewit.nvm
@@ -124,3 +124,4 @@ set_up_analytics: true
 matomo_server_address: https://matomo.digidemlab.org/
 matomo_write_token: your_token_here
 matomo_view_token: your_token_here
+matomo_view_user: decidim

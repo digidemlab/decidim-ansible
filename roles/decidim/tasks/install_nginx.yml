@@ -26,6 +26,15 @@
     name: nginx
     enabled: yes
 
+- name: copy blacklist-referrer.conf
+  copy:
+    src: blacklist-referrer.conf
+    dest: /etc/nginx/conf.d/blacklist-referrer.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart nginx
+
 - name: remove default nginx site
   file:
     path: /etc/nginx/sites-enabled/default

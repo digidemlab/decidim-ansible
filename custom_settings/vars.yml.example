@@ -55,3 +55,7 @@ set_up_analytics: true
 matomo_server_address: https://matomo.example.org/
 matomo_write_token:
 matomo_view_token:
+
+# Maxmind GeoIP2
+account_id: XXXXXX
+license_key: XXXXXXXXXXXXXXX

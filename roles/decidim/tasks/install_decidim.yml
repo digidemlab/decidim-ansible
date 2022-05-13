@@ -7,14 +7,11 @@
       repo: "{{ decidim_app_repo }}"
       dest: "{{ decidim_home }}/{{ decidim_app_dir}}"
       version: "{{ decidim_app_branch }}"
-    notify: bundle install
-
-  - meta: flush_handlers  # run notified handlers now
 
   - name: bundle install
     shell: |
       . $HOME/.rubyrc
-      bundle install
+      bundle install --jobs `getconf _NPROCESSORS_ONLN`
     args:
       chdir: "{{ decidim_home }}/{{ decidim_app_dir }}"
     become: yes
@@ -35,7 +32,11 @@
       mode: '0644'
     notify: restart nginx
 
-  - name: rails assets recompile
+  - name: yarn install
+    yarn:
+      path: "{{ decidim_home }}/{{ decidim_app_dir }}"
+
+  - name: rails assets precompile
     shell: |
       . $HOME/.rubyrc
       RAILS_ENV={{ deployment_environment }} "{{ decidim_home }}"/.rbenv/shims/bundle exec rails assets:precompile
