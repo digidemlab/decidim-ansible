@@ -31,4 +31,5 @@
     - role: bot_blocker
     - role: grzegorznowak.nvm_node
       nvm_node_version: 16.9.1
+      nvm_install_globally: ['yarn']
     - role: decidim
