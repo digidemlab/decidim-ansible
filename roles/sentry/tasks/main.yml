@@ -15,6 +15,9 @@
   register: response
   become_user: True
 
+- set_fact:
+    exists_on_sentry: '"The requested resource does not exist" in response.json.detail'
+
 - name: Create a new project on Sentry
   uri:
     url: https://sentry.digidemlab.org/api/0/teams/digidemlab/digidemlab/projects/
@@ -26,7 +29,7 @@
       name: "{{ decidim_app_name }}"
     status_code: 201
   become_user: True
-  when: '"The requested resource does not exist" in response.json'
+  when: not exists_on_sentry
 
 - name: Update the new project
   uri:
@@ -39,7 +42,7 @@
       platform: "ruby-rails"
     status_code: 200
   become_user: True
-  when: '"The requested resource does not exist" in response.json'
+  when: exists_on_sentry
 
 - name: Retrieve the Sentry project key
   uri:
