@@ -92,3 +92,5 @@
     group: root
     mode: '0644'
   notify: restart nginx
+
+- meta: flush_handlers  # run notified handlers now
