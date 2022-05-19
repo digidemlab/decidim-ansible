@@ -6,6 +6,7 @@
 
 - include_tasks: create_linux_user.yml
 - include_tasks: install_ruby.yml
+- include_tasks: install_imagemagick.yml
 - include_tasks: install_decidim.yml
 - include_tasks: install_nginx.yml
 - include_tasks: install_letsencrypt.yml
