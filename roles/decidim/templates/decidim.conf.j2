@@ -21,12 +21,17 @@ server {
     }
   }
 
-{% if ssl_cert_install %}
-    listen 443 ssl http2;
-    ssl_certificate /etc/nginx/ssl/{{ domain }}/fullchain.pem;
-    ssl_certificate_key /etc/nginx/ssl/{{ domain }}/privkey.pem;
-    include /etc/nginx/options-ssl-nginx.conf;
-    ssl_dhparam /etc/nginx/ssl/ssl-dhparams.pem;
-{% endif %}
+  location ~ ^/(decidim-packs)/ {
+    gzip_static on;
+    expires max;
+    add_header Cache-Control public;
+  }
 
+{% if ssl_cert_install %}
+  listen 443 ssl http2;
+  ssl_certificate /etc/nginx/ssl/{{ domain }}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/{{ domain }}/privkey.pem;
+  include /etc/nginx/options-ssl-nginx.conf;
+  ssl_dhparam /etc/nginx/ssl/ssl-dhparams.pem;
+{% endif %}
 }
