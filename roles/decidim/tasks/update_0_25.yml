@@ -1,0 +1,19 @@
+---
+
+- name: Migrate from CarrierWave to ActiveStorage
+  shell: |
+    . $HOME/.rubyrc
+    RAILS_ENV={{ deployment_environment }} "{{ decidim_home }}"/.rbenv/shims/bundle exec rails decidim:active_storage_migrations:migrate_from_carrierwave_to_active_storage
+  args:
+    chdir: "{{ decidim_home }}/{{ decidim_app_dir }}"
+  become: yes
+  become_user: "{{ decidim_user }}"
+
+- name: Check migrations from CarrierWave to ActiveStorage
+  shell: |
+    . $HOME/.rubyrc
+    RAILS_ENV={{ deployment_environment }} "{{ decidim_home }}"/.rbenv/shims/bundle exec rails decidim:active_storage_migrations:check_migration_from_carrierwave_to_active_storage
+  args:
+    chdir: "{{ decidim_home }}/{{ decidim_app_dir }}"
+  become: yes
+  become_user: "{{ decidim_user }}"

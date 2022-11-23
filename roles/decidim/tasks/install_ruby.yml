@@ -19,7 +19,6 @@
       - libgdbm-dev
       - libicu-dev
       - libpq-dev  # for postgresql
-      - python # on further rerun, Ansible seems to look for Python 2
     state: present
 
 - name: Check if libffi.so.7 exists
