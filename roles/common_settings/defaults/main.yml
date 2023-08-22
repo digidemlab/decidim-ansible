@@ -1,6 +1,8 @@
 ---
 # defaults file for common_settings
 
+complete_install: false
+
 # general params
 ubuntu_dist_name: focal
 timezone: Europe/Stockholm
@@ -17,7 +19,7 @@ db_pass: decidim
 
 # dev tools params
 ruby_major_version: '2.7'
-ruby_minor_version: '8'
+ruby_minor_version: '7'
 bundler_version: '2.2.18'
 
 # requires stephdewit.nvm

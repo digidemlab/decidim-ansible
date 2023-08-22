@@ -2,6 +2,7 @@
 roles:
 - name: grzegorznowak.nvm_node
 - name: geerlingguy.redis
+- name: geerlingguy.clamav
 
 collections:
 - name: hetzner.hcloud

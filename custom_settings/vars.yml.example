@@ -1,11 +1,13 @@
 ---
 # override common settings variables here
 
+complete_install: false
+
 timezone: Europe/Stockholm
 
 decidim_app_dir: decidim-sweden
 decidim_app_repo: https://github.com/digidemlab/decidim-sweden.git
-decidim_app_branch: vps
+decidim_app_branch: master
 
 domain: your-decidim.org  # important for letsencrypt
 decidim_app_name: decidim-sweden
@@ -14,8 +16,8 @@ decidim_mailer_sender: do-not-reply@your-decidim.org
 decidim_admin_email: system@example.org
 decidim_admin_password: decidim123456
 
-ruby_major_version: '2.6'
-ruby_minor_version: '3'
+ruby_major_version: '2.7'
+ruby_minor_version: '7'
 
 # email
 smtp_username: do-not-reply@your-decidim.org
@@ -24,9 +26,6 @@ smtp_address: smtp.example.org
 smtp_domain: your-decidim.org
 smtp_port: 587
 smtp_starttls_auto: "true"
-
-# sentry
-sentry_dsn: your_sentry_address
 
 # clamav
 use_decidim_antivirus: true
@@ -42,12 +41,17 @@ letsencrypt_admin_email: system@example.org
 here_api_key:
 
 # Sentry
+set_up_error_tracking: false
 sentry_token:
 
 # Hetzner token
+set_up_server: true
 hetzner_token:
+hetzner_server_type: cx21
+hetzner_backups: no
 
 # Gandi
+set_up_domain_name: false
 production_api_key:
 
 # Matomo

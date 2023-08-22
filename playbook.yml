@@ -10,13 +10,13 @@
   roles:
     - role: common_settings
     - role: hetzner
-      when: set_up_server
+      when: set_up_server and complete_install
     - role: gandi
-      when: set_up_domain_name
+      when: set_up_domain_name and complete_install
     - role: matomo
-      when: set_up_analytics
+      when: set_up_analytics and complete_install
     - role: sentry
-      when: set_up_error_tracking
+      when: set_up_error_tracking and complete_install
 
 - hosts: server
   vars:
