@@ -22,7 +22,7 @@
 - name: rake db migrate
   shell: |
     . $HOME/.rubyrc
-    bin/rake db:migrate RAILS_ENV={{ deployment_environment }}
+    bin/rails db:migrate RAILS_ENV={{ deployment_environment }}
   args:
     chdir: "{{ decidim_home }}/{{ decidim_app_dir }}"
   become: yes

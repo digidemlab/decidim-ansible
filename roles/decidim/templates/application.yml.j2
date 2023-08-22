@@ -15,7 +15,7 @@ SMTP_STARTTLS_AUTO: "{{ smtp_starttls_auto }}"
 SMTP_AUTHENTICATION: {{ smtp_authentication }}
 {% if set_up_analytics %}
 MATOMO_SERVER_ADDRESS: {{ matomo_server_address }}
-MATOMO_SITE_ID: {{ matomo_site_id }}
+MATOMO_SITE_ID: "{{ matomo_site_id }}"
 MATOMO_TOKEN_AUTH: {{ matomo_view_token }}
 {% endif %}
 {% if set_up_error_tracking %}

@@ -21,7 +21,7 @@
       name: "{{ decidim_app_name }}"
       server_type: "{{ hetzner_server_type }}"
       image: ubuntu-20.04
-      location: hel1
+      location: "{{ hetzner_location }}"
       backups: "{{ hetzner_backups }}"
       ssh_keys:
       - macbook

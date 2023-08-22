@@ -17,6 +17,11 @@
     become: yes
     become_user: "{{ decidim_user }}"
 
+  - name: Remove config/application.yml
+    file:
+      path: "{{ decidim_home }}/{{ decidim_app_dir }}/config/application.yml"
+      state: absent
+
   - name: bundle exec figaro install
     shell: |
       . $HOME/.rubyrc

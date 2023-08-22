@@ -17,9 +17,8 @@ db_pass: decidim
 
 # dev tools params
 ruby_major_version: '2.7'
-ruby_minor_version: '5'
+ruby_minor_version: '8'
 bundler_version: '2.2.18'
-yarn_install: false
 
 # requires stephdewit.nvm
 nvm_node_version: 16.9.1
@@ -47,7 +46,7 @@ decidim_default_locale: ":sv"
 decidim_log_level: ':debug'
 decidim_force_ssl: 'false'
 
-# to generate a new secret: cd ~/decidim-app && rake secret
+# to generate a new secret: cd ~/decidim-app && rails secret
 secret_key_base: 34d58192ebb9c7e60266514ce916ff9d37743d4a50c7c462281ddccae44d1c4db415208cd6c8dbfc6922414219aa91c53721623be7c97897531423a5a4cf04e5
 
 redis_listen_address: '127.0.0.1'
@@ -113,6 +112,7 @@ sentry_token: your-token-here
 set_up_server: true
 hetzner_token: your-token-here
 hetzner_server_type: cx21
+hetzner_location: hel1
 hetzner_backups: no
 
 # Gandi

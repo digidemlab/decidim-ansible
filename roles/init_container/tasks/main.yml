@@ -7,7 +7,7 @@
 - name: Get facts from local roles
   set_fact:
     matomo_site_id: "{{ hostvars['localhost'].matomo_site_id }}"
-    sentry_dsn: "{{ hostvars['localhost'].sentry_dsn }}"
+    # sentry_dsn: "{{ hostvars['localhost'].sentry_dsn }}"
 
 - name: Remove apt lock files
   file: path={{ item }} state=absent
@@ -44,3 +44,11 @@
 - name: restart journald
   become: yes
   systemd: name=systemd-journald state=restarted
+
+- name: add space clearing script
+  copy:
+    src: clear_up_space.sh
+    dest: clear_up_space.sh
+    owner: root
+    group: root
+    mode: '0644'

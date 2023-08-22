@@ -15,6 +15,11 @@ server {
   include /etc/nginx/bots.d/ddos.conf;
   include /etc/nginx/bots.d/blockbots.conf;
 
+  # Block referrer spam domains
+  if ($bad_referer) {
+    return 444;
+  }
+
   location / {
     if ($domain_xyz_allowed_country = no) {
         return 444;

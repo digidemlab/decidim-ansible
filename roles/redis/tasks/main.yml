@@ -1,7 +1,15 @@
 ---
 
+- name: install snap
+  apt:
+    pkg: snapd
+
 # redis is available on port 6379 by default
 - name: install redis in-memory database
+  snap:
+    name: redis
+
+- name: install redis in-memory database through apt
   apt:
     pkg: redis-server
 

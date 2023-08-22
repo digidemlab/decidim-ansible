@@ -9,7 +9,7 @@
 - name: add nginx/passenger and maxmind package repo
   apt_repository: repo={{ item }} state=present
   with_items:
-    - "deb [arch=amd64] https://oss-binaries.phusionpassenger.com/apt/passenger {{ ubuntu_dist_name }} main"
+    - "deb https://oss-binaries.phusionpassenger.com/apt/passenger {{ ubuntu_dist_name }} main"
 
 - name: install geoipupdate, nginx and two modules
   apt:
