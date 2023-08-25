@@ -29,17 +29,20 @@ nvm_node_version: 16.9.1
 
 app_name: demo
 
+decidim_app_dir: decidim
 decidim_app_repo: https://github.com/digidemlab/decidim-sweden.git
+decidim_app_branch: master
 
 decidim_user: decidim
 decidim_group: decidim
 decidim_home: "/home/{{ decidim_user }}"
-decidim_app_dir: decidim
+
 parent_domain: demokratiskastader.se
 sub_domain: decidim
 domain: "{{ sub_domain }}.{{ parent_domain}}"
 decidim_app_name: decidim-{{ app_name }}
 decidim_organisation_name: My organisation
+
 decidim_mailer_sender: do-not-reply@your-decidim.org
 decidim_admin_email: decidim-admin@your-decidim.org  # cannot be changed with ansible after inital run
 decidim_admin_password: password  # cannot be changed with ansible after inital run
