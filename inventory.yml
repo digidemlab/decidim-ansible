@@ -6,7 +6,6 @@ decidim_servers:
         localhost:
       vars:
         ansible_connection: local
-        ansible_python_interpreter: /opt/homebrew/Caskroom/miniconda/base/bin/python3
     server:
       hosts:
         # Leave empty if you have "complete_install: true", put your server's IP address here otherwise
