@@ -1,5 +1,4 @@
 ---
-
 - when: override_default_file is file
   include_vars: "{{ override_default_file }}"
 
@@ -17,17 +16,16 @@
 
 - name: Create a basic server
   hcloud_server:
-      api_token: "{{ hetzner_token }}"
-      name: "{{ decidim_app_name }}"
-      server_type: "{{ hetzner_server_type }}"
-      image: ubuntu-20.04
-      location: "{{ hetzner_location }}"
-      backups: "{{ hetzner_backups }}"
-      ssh_keys:
-      - macbook
-      - jenkins
-      - jon
-      state: present
+    api_token: "{{ hetzner_token }}"
+    name: "{{ decidim_app_name }}"
+    server_type: "{{ hetzner_server_type }}"
+    image: ubuntu-20.04
+    location: "{{ hetzner_location }}"
+    backups: "{{ hetzner_backups }}"
+    ssh_keys:
+      - jon@tux
+      - p-jo
+    state: present
   register: server
   become: yes
 

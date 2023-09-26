@@ -17,20 +17,11 @@
     - /var/cache/apt/archives/lock
     - /var/lib/dpkg/lock-frontend
 
-- name: install ca-certificates
-  apt:
-    pkg: ca-certificates
-    update_cache: yes
-
-- name: upgrade all packages in container
+- name: upgrade all packages in container and autoremove
   apt:
     update_cache: yes
     upgrade: yes
-
-- name: remove old packages
-  apt:
     autoremove: yes
-  when: ansible_distribution == 'Ubuntu'
 
 - name: set machine timezone to "{{ timezone }}"
   timezone:

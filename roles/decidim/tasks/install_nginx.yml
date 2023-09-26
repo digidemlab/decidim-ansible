@@ -18,7 +18,6 @@
       - libnginx-mod-http-passenger
       - libnginx-mod-http-geoip2
       - geoipupdate
-
     update_cache: yes
 
 - name: ensure nginx service is enabled
@@ -72,9 +71,11 @@
     group: root
     mode: '0644'
   notify: restart nginx
+  when: complete_install
 
 - name: Update the GeoIP2 database
   shell: geoipupdate
+  when: complete_install
 
 - name: Add GeoIP2 update to cron
   cron:
@@ -83,6 +84,7 @@
     hour: '23'
     minute: '34'
     job: geoipupdate
+  when: complete_install
 
 - name: create nginx_geoip.conf
   template:
@@ -92,5 +94,6 @@
     group: root
     mode: '0644'
   notify: restart nginx
+  when: complete_install
 
 - meta: flush_handlers  # run notified handlers now
