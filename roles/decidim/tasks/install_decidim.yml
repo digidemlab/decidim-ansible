@@ -49,6 +49,13 @@
       chdir: "{{ decidim_home }}/{{ decidim_app_dir }}"
     notify: restart nginx
 
+  - name: compile webpack assets
+    shell: |
+      . $HOME/.rubyrc
+      bin/rails webpacker:compile RAILS_ENV={{ deployment_environment }}
+    args:
+      chdir: "{{ decidim_home }}/{{ decidim_app_dir }}"
+
   become: yes
   become_user: "{{ decidim_user }}"
   # end-block install decidim
