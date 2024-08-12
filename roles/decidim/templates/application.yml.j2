@@ -13,6 +13,7 @@ SMTP_DOMAIN: {{ smtp_domain }}
 SMTP_PORT: "{{ smtp_port }}"
 SMTP_STARTTLS_AUTO: "{{ smtp_starttls_auto }}"
 SMTP_AUTHENTICATION: {{ smtp_authentication }}
+VERIFICATIONS_DOCUMENT_TYPES: "dni,nie,passport"
 {% if set_up_analytics and complete_install %}
 MATOMO_SERVER_ADDRESS: {{ matomo_server_address }}
 MATOMO_SITE_ID: "{{ matomo_site_id }}"
