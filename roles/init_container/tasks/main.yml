@@ -8,7 +8,7 @@
   set_fact:
     matomo_site_id: "{{ hostvars['localhost'].matomo_site_id }}"
     # sentry_dsn: "{{ hostvars['localhost'].sentry_dsn }}"
-  when: complete_install
+  when: set_up_analytics and complete_install
 
 - name: Remove apt lock files
   file: path={{ item }} state=absent

@@ -73,8 +73,6 @@
       shell: |
         . $HOME/.rubyrc
         rbenv version | grep "{{ ruby_major_version }}.{{ ruby_minor_version }}"
-      args:
-        warn: no
       register: rbenv_check_default
       changed_when: false
       ignore_errors: true
