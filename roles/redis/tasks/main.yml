@@ -18,7 +18,9 @@
     path: /etc/redis/redis.conf
     regexp: '^supervised no*'
     replace: 'supervised systemd'
-  notify: restart redis
+  notify:
+    - stop snap redis
+    - restart redis
 
 - name: create directory to store redis override.conf
   file:
@@ -45,11 +47,15 @@
     path: /etc/redis/redis.conf
     regexp: '^bind .*$'
     replace: "bind {{ redis_listen_address }}"
-  notify: restart redis
+  notify:
+    - stop snap redis
+    - restart redis
 
 - name: set redis listen port
   replace:
     path: /etc/redis/redis.conf
     regexp: '^port .*$'
     replace: "port {{ redis_listen_port }}"
-  notify: restart redis
+  notify:
+    - stop snap redis
+    - restart redis

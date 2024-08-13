@@ -1,7 +1,7 @@
 ---
 # handlers file for redis
 
-- name: ensure snap does not interfere
+- name: stop snap redis
   command: snap stop redis.server
   changed_when: false
 
@@ -12,4 +12,6 @@
 
 - name: systemctl daemon-reload
   shell: systemctl daemon-reload
-  notify: restart redis
+  notify:
+    - stop snap redis
+    - restart redis
