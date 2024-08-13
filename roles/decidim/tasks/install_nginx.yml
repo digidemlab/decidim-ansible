@@ -96,4 +96,10 @@
   notify: restart nginx
   when: complete_install
 
+# NOTE(d1): https://www.phusionpassenger.com/docs/advanced_guides/troubleshooting/nginx/troubleshooting/ruby/
+- name: loosen permissions for passenger
+  command: chmod -R g+x,o+x /home/decidim/
+  register: chmod_result
+  changed_when: "chmod_result.stdout != \"\""
+
 - meta: flush_handlers  # run notified handlers now
