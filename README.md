@@ -10,7 +10,7 @@ To make it work with your app, you need to set a handful of things:
 
 ## Requirements
 
-- Ansible >= 2.8
+- Ansible >= 2.10
 
 This playbook relies on a few roles from Ansible Galaxy. You can install them with:
 
