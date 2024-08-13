@@ -18,8 +18,8 @@ db_user: decidim
 db_pass: decidim
 
 # dev tools params
-ruby_major_version: '3.0'
-ruby_minor_version: '6'
+ruby_major_version: '3.1'
+ruby_minor_version: '1'
 bundler_version: '2.2.18'
 
 # requires stephdewit.nvm

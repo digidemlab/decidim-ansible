@@ -16,8 +16,8 @@ decidim_mailer_sender: do-not-reply@your-decidim.org
 decidim_admin_email: system@example.org
 decidim_admin_password: decidim123456
 
-ruby_major_version: '3.0'
-ruby_minor_version: '6'
+ruby_major_version: '3.1'
+ruby_minor_version: '1'
 
 # email
 smtp_username: do-not-reply@your-decidim.org
