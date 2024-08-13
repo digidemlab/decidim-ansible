@@ -4,7 +4,7 @@
 complete_install: false
 
 # general params
-ubuntu_dist_name: focal
+ubuntu_dist_name: noble
 timezone: Europe/Stockholm
 
 # deployment environment
