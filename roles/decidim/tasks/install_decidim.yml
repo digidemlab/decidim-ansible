@@ -49,10 +49,10 @@
       chdir: "{{ decidim_home }}/{{ decidim_app_dir }}"
     notify: restart nginx
 
-  - name: compile webpack assets
+  - name: compile shakapacker assets
     shell: |
       . $HOME/.rubyrc
-      bin/rails webpacker:compile RAILS_ENV={{ deployment_environment }}
+      bin/rails shakapacker:compile RAILS_ENV={{ deployment_environment }}
     args:
       chdir: "{{ decidim_home }}/{{ decidim_app_dir }}"
 
