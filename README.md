@@ -20,15 +20,15 @@ ansible-galaxy install -r requirements.yml
 
 ## Role Variables
 
-All role variables can be overridden in `custom_settings/vars.yml`. An example file is provided
+All role variables can be overridden in `custom_settings/vars.yml`. An example file is provided. Role variables which are not provided will be read from default values. They can be found in `roles/common_settings/default/main.yml`.
 
-Role variables which are not provided will be read from default values. They can be found in `roles/common_settings/default/main.yml`.
+If you're deploying on a different version of Ubuntu, change `ubuntu_dist_name`.
 
 ## Quick start
 
-- Create a clean Ubuntu 20.04 server
+- Create a clean Ubuntu 24.04 server
 - Install the dependencies (see above)
-- Run the playbook with a provided server's IP address (`complete_install: false`) or with automatic provisioning by providing at least a Hetzner token (`hetzner_token`).
+- Run the playbook with a provided server's IP address (`complete_install: true`) or with automatic provisioning by providing at least a Hetzner token (`set_up_server: true`, `hetzner_token`). See `playbook.yml` for more.
 
 ## Credits
 
