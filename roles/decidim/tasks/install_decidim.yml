@@ -7,6 +7,7 @@
       repo: "{{ decidim_app_repo }}"
       dest: "{{ decidim_home }}/{{ decidim_app_dir}}"
       version: "{{ decidim_app_branch }}"
+      force: true
 
   - name: bundle install
     shell: |
