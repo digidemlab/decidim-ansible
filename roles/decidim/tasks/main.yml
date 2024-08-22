@@ -20,5 +20,3 @@
 - include_tasks: configure_backups.yml
 - include_tasks: configure_antivirus.yml
   when: use_decidim_antivirus
-- include_tasks: update_0_25.yml
-  when: update_0_25
