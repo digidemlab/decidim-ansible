@@ -1,17 +1,4 @@
-
-decidim_servers:
-  children:
-    local:
-      hosts:
-        localhost:
-      vars:
-        ansible_connection: local
-    server:
-      hosts:
-        # Leave empty if you have "complete_install: true", put your server's IP address here otherwise
-      vars:
-        ansible_connection: ssh
-        ansible_ssh_extra_args: '-o StrictHostKeyChecking=no'
-        ansible_ssh_private_key_file: '~/.ssh/id_rsa'
-        ansible_port: 22
-        ansible_python_interpreter: /usr/bin/python3
+all:
+  hosts:
+    your-host-name:
+      ansible_connection: local # or ssh

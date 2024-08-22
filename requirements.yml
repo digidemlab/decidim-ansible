@@ -5,5 +5,4 @@ roles:
 - name: geerlingguy.clamav
 
 collections:
-- name: hetzner.hcloud
 - name: community.general

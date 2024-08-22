@@ -28,7 +28,7 @@ If you're deploying on a different version of Ubuntu, change `ubuntu_dist_name`.
 
 - Create a clean Ubuntu 24.04 server
 - Install the dependencies (see above)
-- Run the playbook with a provided server's IP address (`complete_install: true`) or with automatic provisioning by providing at least a Hetzner token (`set_up_server: true`, `hetzner_token`). See `playbook.yml` for more.
+- Run the playbook with a domain name
 
 ## Credits
 

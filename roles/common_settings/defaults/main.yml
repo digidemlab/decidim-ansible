@@ -1,8 +1,6 @@
 ---
 # defaults file for common_settings
 
-complete_install: false
-
 # general params
 ubuntu_dist_name: noble
 timezone: Europe/Stockholm
@@ -110,29 +108,17 @@ letsencrypt_admin_email: 'admin@your-decidim.org'
 here_api_key: your-api-key-here
 
 # Sentry
-set_up_error_tracking: true
+set_up_error_tracking: false
 sentry_token: your-token-here
 
-# Hetzner token
-set_up_server: true
-hetzner_token: your-token-here
-hetzner_server_type: cx21
-hetzner_location: hel1
-hetzner_backups: no
-
-# Gandi
-set_up_domain_name: true
-production_api_key: your-api-key-here
-
 # Matomo
-set_up_analytics: true
+set_up_analytics: false
 matomo_server_address: https://matomo.digidemlab.org/
 matomo_write_token: your_token_here
 matomo_view_token: your_token_here
 matomo_view_user: decidim
 
 # Maxmind GeoIP2
+set_up_geoip: false
 account_id: XXXXXX
 license_key: XXXXXXXXXXXXXXX
-
-update_0_25: false

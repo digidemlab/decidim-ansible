@@ -1,8 +1,6 @@
 ---
 # override common settings variables here
 
-complete_install: false
-
 timezone: Europe/Stockholm
 
 decidim_app_dir: decidim-sweden
@@ -44,16 +42,6 @@ here_api_key:
 set_up_error_tracking: false
 sentry_token:
 
-# Hetzner token
-set_up_server: true
-hetzner_token:
-hetzner_server_type: cx21
-hetzner_backups: no
-
-# Gandi
-set_up_domain_name: false
-production_api_key:
-
 # Matomo
 set_up_analytics: true
 matomo_server_address: https://matomo.example.org/
@@ -61,5 +49,6 @@ matomo_write_token:
 matomo_view_token:
 
 # Maxmind GeoIP2
+set_up_geoip: true
 account_id: XXXXXX
 license_key: XXXXXXXXXXXXXXX

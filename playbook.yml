@@ -1,28 +1,15 @@
 ---
-# playbook file to set up the machine and install Decidim
+# Playbook to install Decidim
 
-- name: Provision the server on Hetzner
-  hosts: localhost
-  connection: local
-  gather_facts: True
+- hosts: all
   vars:
     override_default_file: "{{ lookup('first_found', 'custom_settings/vars.yml', errors='ignore') }}"
   roles:
     - role: common_settings
-    - role: hetzner
-      when: set_up_server and complete_install
-    - role: gandi
-      when: set_up_domain_name and complete_install
     - role: matomo
-      when: set_up_analytics and complete_install
+      when: set_up_analytics
     - role: sentry
-      when: set_up_error_tracking and complete_install
-
-- hosts: server
-  vars:
-    override_default_file: "{{ lookup('first_found', 'custom_settings/vars.yml', errors='ignore') }}"
-  roles:
-    - role: common_settings
+      when: set_up_error_tracking
     - role: init_container
     - role: logrotate
     - role: geerlingguy.clamav
