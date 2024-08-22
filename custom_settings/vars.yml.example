@@ -61,5 +61,6 @@ matomo_write_token:
 matomo_view_token:
 
 # Maxmind GeoIP2
+set_up_geoip: true
 account_id: XXXXXX
 license_key: XXXXXXXXXXXXXXX

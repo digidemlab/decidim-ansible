@@ -132,7 +132,6 @@ matomo_view_token: your_token_here
 matomo_view_user: decidim
 
 # Maxmind GeoIP2
+set_up_geoip: true
 account_id: XXXXXX
 license_key: XXXXXXXXXXXXXXX
-
-update_0_25: false
