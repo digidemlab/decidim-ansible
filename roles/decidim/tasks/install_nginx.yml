@@ -71,11 +71,11 @@
     group: root
     mode: '0644'
   notify: restart nginx
-  when: complete_install
+  when: set_up_geoip
 
 - name: Update the GeoIP2 database
   shell: geoipupdate
-  when: complete_install
+  when: set_up_geoip
 
 - name: Add GeoIP2 update to cron
   cron:
@@ -84,7 +84,7 @@
     hour: '23'
     minute: '34'
     job: geoipupdate
-  when: complete_install
+  when: set_up_geoip
 
 - name: create nginx_geoip.conf
   template:
@@ -94,7 +94,7 @@
     group: root
     mode: '0644'
   notify: restart nginx
-  when: complete_install
+  when: set_up_geoip
 
 # NOTE(d1): https://www.phusionpassenger.com/docs/advanced_guides/troubleshooting/nginx/troubleshooting/ruby/
 - name: loosen permissions for passenger
