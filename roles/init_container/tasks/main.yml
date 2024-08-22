@@ -6,9 +6,9 @@
 
 - name: Get facts from local roles
   set_fact:
-    matomo_site_id: "{{ hostvars['localhost'].matomo_site_id }}"
-    # sentry_dsn: "{{ hostvars['localhost'].sentry_dsn }}"
-  when: set_up_analytics and complete_install
+    matomo_site_id: "{{ matomo_site_id }}"
+    # sentry_dsn: "{{ sentry_dsn }}"
+  when: set_up_analytics
 
 - name: Remove apt lock files
   file: path={{ item }} state=absent
