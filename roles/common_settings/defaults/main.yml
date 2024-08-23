@@ -57,7 +57,7 @@ redis_listen_port: '6379'
 redis_server_ip_address: '127.0.0.1'
 
 # requires role geerlingguy.clamav
-use_decidim_antivirus: false
+use_decidim_antivirus: true
 clamav_scan_hour: '3'
 clamav_scan_minute: '2'
 # geerlingguy.clamav vars:

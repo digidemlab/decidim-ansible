@@ -1,23 +1,25 @@
 ---
-# override common settings variables here
+# Override common settings variables here.
+# All available settings can be found in roles/common_settings/default/main.yml
 
-timezone: Europe/Stockholm
-
-decidim_app_dir: decidim-sweden
+# Repository for Decidim installation
 decidim_app_repo: https://github.com/digidemlab/decidim-sweden.git
-decidim_app_branch: master
+decidim_app_branch: install-goteborg
 
-domain: your-decidim.org  # important for letsencrypt
-decidim_app_name: decidim-sweden
+# Name and domain
+app_name: dev
+parent_domain: demokratiskastader.se
+sub_domain: dev
+decidim_organisation_name: Decidim
 
+# Notification email address
 decidim_mailer_sender: do-not-reply@your-decidim.org
+
+# First administrators account
 decidim_admin_email: system@example.org
 decidim_admin_password: decidim123456
 
-ruby_major_version: '3.1'
-ruby_minor_version: '1'
-
-# email
+# Outgoing email settings
 smtp_username: do-not-reply@your-decidim.org
 smtp_password: your_smtp_password
 smtp_address: smtp.example.org
@@ -25,30 +27,19 @@ smtp_domain: your-decidim.org
 smtp_port: 587
 smtp_starttls_auto: "true"
 
-# clamav
-use_decidim_antivirus: true
-
-# use custom SSL certificate
-ssl_cert_install: false
-
-# use Let's encrypt certificate
+# Let's encrypt certificate for https
 letsencrypt_install: true
 letsencrypt_admin_email: system@example.org
 
-# Here maps
+# HERE maps api key
 here_api_key:
 
-# Sentry
-set_up_error_tracking: false
-sentry_token:
-
-# Matomo
-set_up_analytics: true
+# Matomo settings
 matomo_server_address: https://matomo.example.org/
-matomo_write_token:
 matomo_view_token:
+matomo_site_id:
 
-# Maxmind GeoIP2
+# Maxmind GeoIP2 settings
 set_up_geoip: true
 account_id: XXXXXX
 license_key: XXXXXXXXXXXXXXX
