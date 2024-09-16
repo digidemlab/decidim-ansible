@@ -1,4 +1,6 @@
 all:
   hosts:
-    your-host-url:
-      ansible_connection: local # or ssh
+    medborgarinflytande.goteborg.se:
+      ansible_ssh_extra_args: '-o StrictHostKeyChecking=no'
+      ansible_port: 22
+      ansible_connection: local

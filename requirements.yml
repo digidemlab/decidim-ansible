@@ -1,8 +1,19 @@
 ---
 roles:
-- name: grzegorznowak.nvm_node
-- name: geerlingguy.redis
-- name: geerlingguy.clamav
+- src: https://github.com/grzegorznowak/ansible-nvm-node.git
+  version: master
+  name: grzegorznowak.nvm_node
+- src: https://github.com/geerlingguy/ansible-role-redis.git
+  version: master
+  name: geerlingguy.redis
+- src: https://github.com/geerlingguy/ansible-role-clamav.git
+  version: master
+  name: geerlingguy.clamav
 
 collections:
-- name: community.general
+- src: https://github.com/ansible-collections/hetzner.hcloud.git
+  version: main
+  name: hetzner.hcloud
+- src: https://github.com/ansible-collections/community.general.git
+  version: main
+  name: community.general

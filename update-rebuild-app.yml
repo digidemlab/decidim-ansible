@@ -1,0 +1,47 @@
+---
+# Playbook to rebuild updated Decidim
+
+- hosts: all
+  vars:
+    override_default_file: "{{ lookup('first_found', 'custom_settings/vars.yml', errors='ignore') }}"
+  roles:
+    - role: common_settings
+  tasks:
+    - name: rebuild decidim
+      block:
+      - name: bundle install
+        shell: |
+          . $HOME/.rubyrc
+          bundle install --jobs `getconf _NPROCESSORS_ONLN`
+        args:
+          chdir: "{{ decidim_home }}/{{ decidim_app_dir }}"
+        become: yes
+        become_user: "{{ decidim_user }}"
+
+      - name: yarn install
+        yarn:
+          path: "{{ decidim_home }}/{{ decidim_app_dir }}"
+
+      - name: rails assets precompile
+        shell: |
+          . $HOME/.rubyrc
+          RAILS_ENV={{ deployment_environment }} "{{ decidim_home }}"/.rbenv/shims/bundle exec rails assets:precompile
+        args:
+          chdir: "{{ decidim_home }}/{{ decidim_app_dir }}"
+
+      - name: compile shakapacker assets
+        shell: |
+          . $HOME/.rubyrc
+          bin/rails shakapacker:compile RAILS_ENV={{ deployment_environment }}
+        args:
+          chdir: "{{ decidim_home }}/{{ decidim_app_dir }}"
+
+      become: yes
+      become_user: "{{ decidim_user }}"
+      # end-block install decidim
+
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted
+      become: true

@@ -1,0 +1,19 @@
+---
+# Playbook to fetch updated Decidim repository
+
+- hosts: all
+  vars:
+    override_default_file: "{{ lookup('first_found', 'custom_settings/vars.yml', errors='ignore') }}"
+  roles:
+    - role: common_settings
+  tasks:
+    - name: git update decidim app
+      git:
+        repo: "{{ decidim_app_repo }}"
+        dest: "{{ decidim_home }}/{{ decidim_app_dir}}"
+        version: "{{ decidim_app_branch }}"
+        force: true
+        clone: no
+        update: yes
+      become: yes
+      become_user: "{{ decidim_user }}"
