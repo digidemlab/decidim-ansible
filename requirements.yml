@@ -12,8 +12,6 @@ roles:
 
 collections:
 - src: https://github.com/ansible-collections/hetzner.hcloud.git
-  version: main
   name: hetzner.hcloud
 - src: https://github.com/ansible-collections/community.general.git
-  version: main
   name: community.general
