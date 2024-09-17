@@ -5,6 +5,7 @@
     pkg:
       - postgresql
       - python3-psycopg2  # required for ansible
+      - postgresql-contrib # for initiatives
   notify: restart postgresql
 
 - name: get postgresql installed version
