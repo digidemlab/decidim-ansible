@@ -135,3 +135,6 @@ matomo_view_user: decidim
 set_up_geoip: true
 account_id: XXXXXX
 license_key: XXXXXXXXXXXXXXX
+
+# Initiatives
+set_up_initiatives: true

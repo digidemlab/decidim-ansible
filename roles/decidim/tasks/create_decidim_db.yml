@@ -19,6 +19,16 @@
   become: yes
   become_user: "{{ decidim_user }}"
 
+- name: rake migrate initiatives
+  shell: |
+    . $HOME/.rubyrc
+    bin/rails decidim_initiatives:install:migrations RAILS_ENV={{ deployment_environment }}
+  args:
+    chdir: "{{ decidim_home }}/{{ decidim_app_dir }}"
+  become: yes
+  become_user: "{{ decidim_user }}"
+  when: set_up_initiatives
+
 - name: rake db migrate
   shell: |
     . $HOME/.rubyrc
