@@ -35,6 +35,7 @@ letsencrypt_admin_email: system@example.org
 here_api_key:
 
 # Matomo settings
+set_up_analytics: false
 matomo_server_address: https://matomo.example.org/
 matomo_view_token:
 matomo_site_id:
