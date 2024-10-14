@@ -20,6 +20,7 @@
       - libicu-dev
       - libpq-dev  # for postgresql
     state: present
+    update_cache: true
 
 - name: Check if libffi.so.7 exists
   stat:
