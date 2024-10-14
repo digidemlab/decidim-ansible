@@ -12,7 +12,7 @@
 - name: create decidim database on server {{ db_server }} and initialize it
   shell: |
       . $HOME/.rubyrc
-      bin/rails db:create RAILS_ENV={{ deployment_environment }}
+      {{ rbenv_rails_bin }} db:create RAILS_ENV={{ deployment_environment }}
   args:
     chdir: "{{ decidim_home }}/{{ decidim_app_dir }}"
   when: decidim_db_check_exist.rowcount == 0
@@ -41,7 +41,7 @@
 - name: rake db migrate
   shell: |
     . $HOME/.rubyrc
-    bin/rails db:schema:load RAILS_ENV={{ deployment_environment }}
+    {{ rbenv_bin_rails }} db:migrate RAILS_ENV={{ deployment_environment }}
   args:
     chdir: "{{ decidim_home }}/{{ decidim_app_dir }}"
   become: yes
