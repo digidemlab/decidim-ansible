@@ -17,6 +17,4 @@ fastcgi_param CITY_NAME    $geoip2_data_city_name;
 
 map $geoip2_data_country_code $domain_xyz_allowed_country {
     default yes;
-    IN no;
-    PK no;
 }
