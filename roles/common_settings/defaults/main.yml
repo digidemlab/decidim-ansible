@@ -35,6 +35,12 @@ decidim_user: decidim
 decidim_group: decidim
 decidim_home: "/home/{{ decidim_user }}"
 
+# rbenv paths
+rbenv_bin: "{{ decidim_home }}/.rbenv/bin/rbenv"
+rbenv_bundle_bin: "{{ decidim_home }}/.rbenv/shims/bundle"
+rbenv_gem_bin: "{{ decidim_home }}/.rbenv/shims/gem"
+rbenv_rails_bin: "{{ decidim_home }}/.rbenv/shims/rails"
+
 parent_domain: demokratiskastader.se
 sub_domain: decidim
 domain: "{{ sub_domain }}.{{ parent_domain}}"

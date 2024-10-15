@@ -13,21 +13,21 @@
       - name: rails assets precompile
         shell: |
           . $HOME/.rubyrc
-          RAILS_ENV={{ deployment_environment }} "{{ decidim_home }}"/bin/rails exec rails tmp:clear
+          RAILS_ENV={{ deployment_environment }} {{ rbenv_rails_bin }} exec rails tmp:clear
         args:
           chdir: "{{ decidim_home }}/{{ decidim_app_dir }}"
 
       - name: rails assets precompile
         shell: |
           . $HOME/.rubyrc
-          RAILS_ENV={{ deployment_environment }} "{{ decidim_home }}"/bin/rails assets:precompile
+          RAILS_ENV={{ deployment_environment }} {{ rbenv_rails_bin }} assets:precompile
         args:
           chdir: "{{ decidim_home }}/{{ decidim_app_dir }}"
 
       - name: compile shakapacker assets
         shell: |
           . $HOME/.rubyrc
-          bin/rails shakapacker:compile RAILS_ENV={{ deployment_environment }}
+          {{ rbenv_bin_rails }} shakapacker:compile RAILS_ENV={{ deployment_environment }}
         args:
           chdir: "{{ decidim_home }}/{{ decidim_app_dir }}"
 
