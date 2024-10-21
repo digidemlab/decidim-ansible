@@ -6,3 +6,5 @@
 /custom_settings/old/vars*.yml
 
 /roles/decidim/files/ssl
+
+inventory.yml

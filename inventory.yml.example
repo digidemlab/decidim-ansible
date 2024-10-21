@@ -1,0 +1,4 @@
+all:
+  hosts:
+    your-url-here:
+      ansible_connection: ssh
