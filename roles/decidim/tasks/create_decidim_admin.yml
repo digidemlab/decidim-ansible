@@ -20,7 +20,7 @@
 - name: create decidim admin and remove temp file
   shell: |
     . $HOME/.rubyrc
-    {{ rbenv_bin_rails }} console -e {{ deployment_environment }} < init-decidim.rb
+    {{ rbenv_rails_bin }} console -e {{ deployment_environment }} < init-decidim.rb
     rm init-decidim.rb
     touch create-decidim-admin.done
   args:

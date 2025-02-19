@@ -9,10 +9,10 @@
       version: "{{ decidim_app_branch }}"
       force: true
 
-  - name: bundle install
+  - name: bundle update
     shell: |
       . $HOME/.rubyrc
-      {{ rbenv_bundle_bin }} install --jobs `getconf _NPROCESSORS_ONLN`
+      {{ rbenv_bundle_bin }} update
     args:
       chdir: "{{ decidim_home }}/{{ decidim_app_dir }}"
     become: yes

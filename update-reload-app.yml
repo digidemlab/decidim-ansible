@@ -27,7 +27,7 @@
       - name: compile shakapacker assets
         shell: |
           . $HOME/.rubyrc
-          {{ rbenv_bin_rails }} shakapacker:compile RAILS_ENV={{ deployment_environment }}
+          {{ rbenv_rails_bin }} shakapacker:compile RAILS_ENV={{ deployment_environment }}
         args:
           chdir: "{{ decidim_home }}/{{ decidim_app_dir }}"
 
