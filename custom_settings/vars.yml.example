@@ -43,6 +43,7 @@ here_api_key:
 # Sentry
 set_up_error_tracking: false
 sentry_token:
+sentry_dsn:
 
 # Hetzner token
 set_up_server: true
