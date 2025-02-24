@@ -9,10 +9,10 @@
       version: "{{ decidim_app_branch }}"
       force: true
 
-  - name: bundle update
+  - name: bundle install
     shell: |
       . $HOME/.rubyrc
-      {{ rbenv_bundle_bin }} update
+      {{ rbenv_bundle_bin }} install
     args:
       chdir: "{{ decidim_home }}/{{ decidim_app_dir }}"
     become: yes
