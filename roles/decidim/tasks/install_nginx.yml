@@ -11,6 +11,13 @@
   with_items:
     - "deb https://oss-binaries.phusionpassenger.com/apt/passenger {{ ubuntu_dist_name }} main"
 
+- name: copy blacklist-referrer.conf
+  copy:
+    src: /etc/apt/trusted.gpg
+    dest: /etc/apt/trusted.gpg.d/trusted.gpg
+    owner: root
+    group: root
+
 - name: install geoipupdate, nginx and two modules
   apt:
     pkg:
