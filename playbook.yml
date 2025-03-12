@@ -14,6 +14,6 @@
     - role: redis
     - role: bot_blocker
     - role: grzegorznowak.nvm_node
-      nvm_node_version: 18.20.4
+      nvm_node_version: 20.18.3
       nvm_install_globally: ['yarn']
     - role: decidim
