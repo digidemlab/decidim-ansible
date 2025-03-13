@@ -56,7 +56,7 @@ decidim_log_level: ':debug'
 decidim_force_ssl: 'false'
 
 # to generate a new secret: cd ~/decidim-app && rails secret
-secret_key_base: 34d58192ebb9c7e60266514ce916ff9d37743d4a50c7c462281ddccae44d1c4db415208cd6c8dbfc6922414219aa91c53721623be7c97897531423a5a4cf04e5
+secret_key_base:
 
 redis_listen_address: '127.0.0.1'
 redis_listen_port: '6379'
