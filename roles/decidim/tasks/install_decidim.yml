@@ -42,6 +42,13 @@
     yarn:
       path: "{{ decidim_home }}/{{ decidim_app_dir }}"
 
+  - name: generate tailwind.config.js
+    shell: |
+      . $HOME/.rubyrc
+      RAILS_ENV={{ deployment_environment }} {{ rbenv_rails_bin }} runner Decidim::Assets::Tailwind.write_runtime_configuration
+    args:
+      chdir: "{{ decidim_home }}/{{ decidim_app_dir }}"
+
   - name: rails assets precompile
     shell: |
       . $HOME/.rubyrc
